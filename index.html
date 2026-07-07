@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alain Bindele — Software Engineer</title>
+  <meta name="description" content="Portfolio di Alain Bindele — Software Engineer specializzato in Java, Spring Boot e AWS Cloud.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       Design tokens
+       ============================================================ */
+    :root {
+      --accent: #7c6cf0;
+      --teal: #6ee7d8;
+      --blur: 15px;
+      --ink: #e8ecf6;
+      --ink-soft: #b9c2d8;
+      --ink-mute: #8a93ab;
+      --glass: rgba(20, 25, 46, 0.45);
+      --glass-strong: rgba(16, 20, 38, 0.5);
+      --hairline: rgba(255, 255, 255, 0.09);
+      --hairline-top: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      --orb-play: running;
+    }
+
+    /* ============================================================
+       Base
+       ============================================================ */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #080b14 0%, #0b0f1e 50%, #080b14 100%);
+      color: var(--ink);
+      font-family: 'Space Grotesk', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: #9db8ff; text-decoration: none; }
+    a:hover { color: #c4d4ff; }
+    button, input, textarea, select { font-family: inherit; }
+    ::selection { background: rgba(124, 108, 240, 0.4); }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* ============================================================
+       Animated ambient background (drifting glow orbs)
+       ============================================================ */
+    .ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .orb { position: absolute; border-radius: 50%; }
+    .orb-1 { top: -10%; left: -8%; width: 55vw; height: 55vw; filter: blur(70px);
+      background: radial-gradient(circle, rgba(66,56,180,0.45), rgba(66,56,180,0) 70%);
+      animation: drift1 26s ease-in-out infinite; animation-play-state: var(--orb-play); }
+    .orb-2 { top: 25%; right: -12%; width: 48vw; height: 48vw; filter: blur(80px);
+      background: radial-gradient(circle, rgba(20,140,140,0.35), rgba(20,140,140,0) 70%);
+      animation: drift2 32s ease-in-out infinite; animation-play-state: var(--orb-play); }
+    .orb-3 { bottom: -15%; left: 20%; width: 50vw; height: 50vw; filter: blur(90px);
+      background: radial-gradient(circle, rgba(140,80,220,0.3), rgba(140,80,220,0) 70%);
+      animation: drift3 38s ease-in-out infinite; animation-play-state: var(--orb-play); }
+    @keyframes drift1 { 50% { transform: translate(120px, 80px) scale(1.15); } }
+    @keyframes drift2 { 50% { transform: translate(-140px, 60px) scale(0.9); } }
+    @keyframes drift3 { 50% { transform: translate(80px, -100px) scale(1.1); } }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ============================================================
+       Reusable glass surfaces
+       ============================================================ */
+    .glass {
+      background: var(--glass);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      border: 1px solid var(--hairline);
+      box-shadow: var(--hairline-top), 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .glass-strong {
+      background: var(--glass-strong);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--hairline-top);
+    }
+
+    /* ============================================================
+       Navbar (glass pill)
+       ============================================================ */
+    nav.bar {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 50;
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 10px 8px 20px; border-radius: 999px;
+      background: rgba(16, 20, 38, 0.55);
+      backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--hairline-top), 0 8px 32px rgba(0, 0, 0, 0.4);
+      max-width: calc(100vw - 32px);
+    }
+    .brand { font-weight: 700; font-size: 16px; color: #f0f3fb; margin-right: 8px; }
+    .brand span { color: var(--accent); }
+    .nav-link {
+      background: none; border: none; color: var(--ink-soft); font-size: 14px;
+      padding: 8px 12px; border-radius: 999px; cursor: pointer;
+      white-space: nowrap; transition: all 0.2s;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255, 255, 255, 0.08); }
+    .lang { display: flex; gap: 2px; padding: 3px; border-radius: 999px; margin-left: 6px;
+      background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .lang button { border: none; cursor: pointer; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.05em; padding: 5px 12px; border-radius: 999px; background: transparent;
+      color: var(--ink-mute); transition: all 0.25s; }
+    .lang button.on { background: rgba(255, 255, 255, 0.16); color: #fff; }
+
+    /* ============================================================
+       Layout
+       ============================================================ */
+    main { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+    main.narrow { max-width: 1000px; }
+    .pad-top { padding-top: 120px; }
+    .section-pill {
+      display: inline-flex; align-items: baseline; gap: 12px;
+      padding: 10px 22px; border-radius: 999px; margin-bottom: 24px;
+    }
+    .section-pill h2 { margin: 0; font-size: 20px; font-weight: 600; color: #eef1fa; letter-spacing: -0.01em; }
+    .section-pill .count { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #7f8bad; }
+    .section-sub { margin: 12px 4px 24px; font-size: 14px; color: var(--ink-mute); }
+
+    /* ============================================================
+       Hero
+       ============================================================ */
+    #hero { min-height: 88vh; display: flex; align-items: center; padding-top: 90px; }
+    .hero-card {
+      width: 100%; display: flex; align-items: center; gap: clamp(24px, 4vw, 44px);
+      flex-wrap: wrap; padding: clamp(32px, 6vw, 64px); border-radius: 28px;
+      background: rgba(16, 20, 38, 0.45);
+      backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 24px 64px rgba(0, 0, 0, 0.45);
+    }
+    .hero-text { flex: 1 1 420px; min-width: 0; }
+    .hero-loc { margin: 0 0 16px; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+      color: var(--teal); letter-spacing: 0.08em; }
+    .hero-text h1 { margin: 0 0 12px; font-size: clamp(40px, 7vw, 72px); font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.05; color: #f4f6fc; }
+    .hero-tagline { margin: 0 0 24px; font-size: clamp(16px, 2.4vw, 21px); color: #9aa6c4; font-weight: 500; }
+    .hero-bio { margin: 0 0 28px; max-width: 780px; font-size: 16px; line-height: 1.7;
+      color: var(--ink-soft); text-wrap: pretty; }
+    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+    .badge { font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 7px 15px; border-radius: 999px; }
+    .badge-teal { color: var(--teal); background: rgba(45, 212, 191, 0.08); border: 1px solid rgba(45, 212, 191, 0.2); }
+    .badge-violet { color: #aab6f5; background: rgba(124, 108, 240, 0.1); border: 1px solid rgba(124, 108, 240, 0.22); }
+    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-photo {
+      flex: 0 0 auto; width: clamp(240px, 34%, 400px); aspect-ratio: 1 / 1; max-width: 100%;
+      object-fit: cover; object-position: center 22%; border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Buttons */
+    .btn { cursor: pointer; white-space: nowrap; padding: 13px 26px; border-radius: 999px;
+      font-size: 15px; font-weight: 600; transition: all 0.25s; border: none; }
+    .btn-primary { color: #0a0e1c; background: linear-gradient(180deg, #cfd6ff, #a8b4f5);
+      box-shadow: 0 6px 24px rgba(124, 108, 240, 0.35); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(124, 108, 240, 0.55); }
+    .btn-ghost { color: #dfe5f5; background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14); backdrop-filter: blur(8px); }
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-2px); color: #fff; }
+
+    /* ============================================================
+       Skills
+       ============================================================ */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .skill { padding: 20px 22px; border-radius: 18px; transition: all 0.25s ease; }
+    .skill:hover { transform: translateY(-3px); border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: var(--hairline-top), 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 32px rgba(124, 108, 240, 0.1); }
+    .skill-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+    .skill-head b { font-size: 15px; font-weight: 600; color: #eef1fa; }
+    .skill-head span { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--teal); }
+    .bar { width: 100%; height: 6px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+    .bar > i { display: block; height: 100%; border-radius: 999px;
+      background: linear-gradient(90deg, #6ee7d8, #7c6cf0); transition: width 0.6s ease; }
+
+    /* ============================================================
+       Publication
+       ============================================================ */
+    .pub { display: flex; gap: 22px; align-items: flex-start; padding: 28px; border-radius: 22px; flex-wrap: wrap; }
+    .pub-icon { width: 52px; height: 52px; flex-shrink: 0; display: flex; align-items: center;
+      justify-content: center; border-radius: 14px; font-size: 24px;
+      background: rgba(124, 108, 240, 0.12); border: 1px solid rgba(124, 108, 240, 0.25); }
+    .pub-body { flex: 1; min-width: 260px; }
+    .pub-body h3 { margin: 0 0 12px; font-size: 18px; font-weight: 600; color: #eef1fa; text-wrap: pretty; }
+    .pub-body p { margin: 0 0 20px; font-size: 14px; line-height: 1.7; color: #a7b1cc; text-wrap: pretty; }
+    .pub-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 999px;
+      font-size: 14px; font-weight: 600; color: #0a0e1c; background: linear-gradient(180deg, #cfd6ff, #a8b4f5);
+      transition: all 0.25s; }
+    .pub-link:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124, 108, 240, 0.45); color: #0a0e1c; }
+
+    /* ============================================================
+       Project cards
+       ============================================================ */
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
+    .card { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 24px;
+      overflow: hidden; border-radius: 20px; transition: all 0.25s ease; }
+    .card:hover { transform: translateY(-4px); background: rgba(26, 32, 58, 0.6);
+      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 18px 44px rgba(0, 0, 0, 0.4), 0 0 40px rgba(124, 108, 240, 0.12); }
+    .card.dim { opacity: 0.68; }
+    .card-figure { margin: -24px -24px 4px; overflow: hidden; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .card-figure img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform 0.4s ease; }
+    .card:hover .card-figure img { transform: scale(1.05); }
+    .card-head { display: flex; align-items: center; gap: 12px; }
+    .card-head .emoji { font-size: 26px; line-height: 1; }
+    .card-head h3 { margin: 0; font-size: 18px; font-weight: 600; color: #f0f3fb; flex: 1; }
+    .status { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em;
+      padding: 4px 9px; border-radius: 999px; color: var(--ink-mute);
+      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .card-desc { margin: 0; font-size: 14px; line-height: 1.6; color: #a7b1cc; flex: 1; text-wrap: pretty; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 4px 10px; border-radius: 999px;
+      color: #9fe8dd; background: rgba(45, 212, 191, 0.08); border: 1px solid rgba(45, 212, 191, 0.18); }
+    .visit { font-size: 14px; font-weight: 600; color: #aab6f5; align-self: flex-start; transition: color 0.2s; }
+    .visit:hover { color: #d3daff; }
+    section.block { margin-bottom: 56px; }
+
+    /* ============================================================
+       Contact
+       ============================================================ */
+    .contact-card { padding: clamp(32px, 5vw, 56px); border-radius: 28px; text-align: center;
+      background: var(--glass-strong);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 24px 64px rgba(0, 0, 0, 0.45); }
+    .contact-card h2 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 36px); font-weight: 700;
+      letter-spacing: -0.02em; color: #f4f6fc; }
+    .contact-card p { margin: 0 0 32px; font-size: 16px; color: #9aa6c4; }
+    .contact-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .contact-links a { padding: 12px 24px; border-radius: 999px; font-size: 14px; font-weight: 600;
+      color: #dfe5f5; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.14); transition: all 0.25s; }
+    .contact-links a:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-2px); color: #fff; }
+    .contact-links a.cv { color: #0a0e1c; background: linear-gradient(180deg, #cfd6ff, #a8b4f5);
+      border: none; box-shadow: 0 6px 24px rgba(124, 108, 240, 0.35); }
+    .contact-links a.cv:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(124, 108, 240, 0.55); color: #0a0e1c; }
+    .foot { text-align: center; margin: 32px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5d6784; }
+
+    /* ============================================================
+       About page
+       ============================================================ */
+    .about-head { text-align: center; margin-bottom: 44px; }
+    .about-head h1 { margin: 0 0 16px; font-size: clamp(34px, 6vw, 56px); font-weight: 700;
+      letter-spacing: -0.02em; color: #f4f6fc; }
+    .about-head p { margin: 0 auto; max-width: 620px; font-size: 16px; line-height: 1.7; color: #9aa6c4; text-wrap: pretty; }
+    .profile { display: flex; gap: clamp(24px, 4vw, 44px); align-items: center; flex-wrap: wrap;
+      padding: clamp(28px, 4vw, 44px); border-radius: 26px; margin-bottom: 56px;
+      background: rgba(16, 20, 38, 0.48);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 20px 54px rgba(0, 0, 0, 0.4); }
+    .profile-photo { flex-shrink: 0; width: clamp(150px, 26vw, 200px); height: clamp(150px, 26vw, 200px);
+      border-radius: 50%; padding: 4px; margin: 0 auto;
+      background: linear-gradient(150deg, rgba(110, 231, 216, 0.7), rgba(124, 108, 240, 0.7));
+      box-shadow: 0 0 44px rgba(124, 108, 240, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
+    .profile-photo img { width: 100%; height: 100%; box-sizing: border-box; border-radius: 50%;
+      object-fit: cover; object-position: center 22%; display: block; border: 2px solid rgba(8, 11, 20, 0.6); }
+    .profile-body { flex: 1; min-width: 260px; }
+    .profile-body h2 { margin: 0 0 16px; font-size: 22px; font-weight: 600; color: #eef1fa; }
+    .profile-body p { margin: 0 0 24px; font-size: 16px; line-height: 1.75; color: var(--ink-soft); text-wrap: pretty; }
+    .exp-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 56px; }
+    .exp { padding: 26px; border-radius: 20px; transition: all 0.25s ease; }
+    .exp:hover { transform: translateY(-3px); border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: var(--hairline-top), 0 16px 42px rgba(0, 0, 0, 0.38), 0 0 34px rgba(124, 108, 240, 0.1); }
+    .exp-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+      flex-wrap: wrap; margin-bottom: 16px; }
+    .exp-head h3 { margin: 0 0 4px; font-size: 18px; font-weight: 600; color: #9fe8dd; }
+    .exp-head .company { margin: 0; font-size: 15px; color: #eef1fa; }
+    .exp-meta { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-mute); line-height: 1.7; }
+    .exp-meta .period { color: #aab6f5; }
+    .exp ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .exp li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; line-height: 1.6; color: #a7b1cc; text-wrap: pretty; }
+    .exp li::before { content: ''; flex-shrink: 0; width: 6px; height: 6px; margin-top: 8px; border-radius: 999px;
+      background: linear-gradient(90deg, #6ee7d8, #7c6cf0); }
+    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-bottom: 18px; }
+    .info-card { padding: 28px; border-radius: 20px; }
+    .info-card h2 { margin: 0 0 20px; font-size: 18px; font-weight: 600; color: #9fe8dd; display: flex; align-items: center; gap: 10px; }
+    .edu { padding-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+    .edu:last-child { border-bottom: none; padding-bottom: 0; }
+    .edu h3 { margin: 0 0 4px; font-size: 15px; font-weight: 600; color: #eef1fa; }
+    .edu .school { margin: 0 0 6px; font-size: 14px; color: #aab6f5; }
+    .edu .meta { display: flex; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-mute); margin-bottom: 8px; }
+    .edu .note { margin: 2px 0 0; font-size: 13px; line-height: 1.55; color: #a7b1cc; text-wrap: pretty; }
+    .lang-row { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.07); }
+    .lang-row .flag { font-size: 24px; line-height: 1; }
+    .lang-row b { display: block; font-size: 15px; font-weight: 600; color: #eef1fa; }
+    .lang-row small { font-size: 13px; color: var(--ink-mute); }
+    .stack { display: flex; flex-direction: column; gap: 12px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip { font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 8px 14px; border-radius: 999px;
+      color: #aab6f5; background: rgba(124, 108, 240, 0.1); border: 1px solid rgba(124, 108, 240, 0.22); }
+    .cert { padding: 16px 18px; border-radius: 14px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.07); }
+    .cert h3 { margin: 0 0 4px; font-size: 15px; font-weight: 600; color: #eef1fa; }
+    .cert p { margin: 0; font-size: 13px; color: var(--ink-mute); }
+
+    /* ============================================================
+       Admin
+       ============================================================ */
+    main.admin { max-width: 780px; }
+    .login { max-width: 480px; margin: 0 auto; padding: clamp(32px, 5vw, 48px); border-radius: 24px;
+      background: var(--glass-strong); box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 24px 64px rgba(0,0,0,0.45); }
+    .login h1 { margin: 0 0 8px; font-size: 24px; font-weight: 700; color: #f4f6fc; }
+    .login p.hint { margin: 0 0 24px; font-size: 14px; line-height: 1.6; color: #9aa6c4; }
+    .field { width: 100%; padding: 13px 16px; border-radius: 12px; font-size: 14px; color: var(--ink);
+      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); outline: none; }
+    .field:focus { border-color: rgba(124, 108, 240, 0.6); }
+    input.field.mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+    .login .err { margin: 12px 0 0; font-size: 13px; color: #f2a1a1; }
+    .login .note { margin: 18px 0 0; font-size: 12px; line-height: 1.5; color: #6d7893; text-align: center; }
+    .banner { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 14px; margin-bottom: 20px;
+      background: rgba(45, 212, 191, 0.07); border: 1px solid rgba(45, 212, 191, 0.18);
+      backdrop-filter: blur(var(--blur)); font-size: 13px; color: #9fe8dd; }
+    .dash-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .dash-head h1 { margin: 0; font-size: 24px; font-weight: 700; color: #f4f6fc; }
+    .row { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 16px; cursor: grab; transition: all 0.2s; }
+    .row:hover { background: rgba(26, 32, 58, 0.65); border-color: rgba(255, 255, 255, 0.15); }
+    .row.dragging { opacity: 0.4; }
+    .row .grip { color: #5d6784; font-size: 15px; letter-spacing: 2px; }
+    .row .r-emoji { font-size: 20px; }
+    .row .r-body { flex: 1; min-width: 0; }
+    .row .r-title { font-size: 15px; font-weight: 600; color: #eef1fa; }
+    .row .r-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7f8bad; }
+    .pill-btn { cursor: pointer; padding: 7px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+    .pill-btn.edit { color: var(--ink-soft); background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); }
+    .pill-btn.edit:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+    .pill-btn.del { color: #f2a1a1; background: rgba(240, 100, 100, 0.07); border: 1px solid rgba(240, 100, 100, 0.2); }
+    .pill-btn.del:hover { background: rgba(240, 100, 100, 0.16); }
+    .pill-btn.add { color: #0a0e1c; background: linear-gradient(180deg, #cfd6ff, #a8b4f5); border: none; padding: 10px 20px; font-size: 14px; }
+    .pill-btn.logout { color: var(--ink-soft); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 10px 20px; font-size: 14px; }
+
+    /* Modal form */
+    .modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center;
+      padding: 20px; background: rgba(4, 6, 14, 0.6); backdrop-filter: blur(6px); }
+    .modal-box { width: 100%; max-width: 560px; max-height: 88vh; overflow-y: auto; padding: 32px; border-radius: 24px;
+      background: rgba(18, 23, 44, 0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 32px 80px rgba(0,0,0,0.6); }
+    .modal-box h2 { margin: 0 0 22px; font-size: 20px; font-weight: 700; color: #f4f6fc; }
+    .form-label { display: block; font-size: 12px; color: var(--ink-mute); margin-bottom: 6px; }
+    .form-grid { display: grid; grid-template-columns: 90px 1fr; gap: 12px; margin-bottom: 12px; }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    textarea.field { resize: vertical; line-height: 1.5; font-size: 13px; margin-bottom: 12px; }
+    .chips-input { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px; border-radius: 12px; margin-bottom: 22px;
+      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); }
+    .chips-input .c { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; padding: 5px 10px; border-radius: 999px; color: #9fe8dd;
+      background: rgba(45, 212, 191, 0.1); border: 1px solid rgba(45, 212, 191, 0.2); }
+    .chips-input .c button { cursor: pointer; border: none; background: none; color: #9fe8dd; padding: 0; font-size: 13px; }
+    .chips-input input { flex: 1; min-width: 120px; border: none; outline: none; background: none;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink); padding: 5px; }
+    .form-actions { display: flex; gap: 12px; justify-content: flex-end; }
+
+    /* Toasts */
+    .toasts { position: fixed; bottom: 24px; right: 24px; z-index: 200; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+    .toast { padding: 13px 20px; border-radius: 14px; font-size: 14px; font-weight: 500; color: #eef1fa; max-width: 320px;
+      background: rgba(24, 30, 54, 0.85); backdrop-filter: blur(16px); animation: toastIn 0.3s ease;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 12px 32px rgba(0, 0, 0, 0.5); }
+    .toast.ok { border: 1px solid rgba(45, 212, 191, 0.35); }
+    .toast.err { border: 1px solid rgba(240, 100, 100, 0.4); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+
+<body>
+  <!-- Animated ambient background -->
+  <div class="ambient">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="bar">
+    <a href="#/" class="brand">alain<span>.</span></a>
+    <div id="nav-links"></div>
+    <div class="lang">
+      <button id="lang-it" onclick="App.setLang('it')">IT</button>
+      <button id="lang-en" onclick="App.setLang('en')">EN</button>
+    </div>
+  </nav>
+
+  <!-- Views are rendered here -->
+  <div id="view"></div>
+
+  <!-- Toast host -->
+  <div class="toasts" id="toasts"></div>
+
+  <script>
+  /* ================================================================
+     Alain Bindele — personal portfolio (static, GitHub Pages ready)
+
+     Single-page app with hash routing:
+       #/        public site (hero, skills, publications, projects, contact)
+       #/about   CV / about page
+       #/admin   hidden CMS (token login + GitHub Contents API)
+
+     Project data is loaded at runtime from data/projects.json.
+     ================================================================ */
+  (function () {
+    'use strict';
+
+    /* ---- GitHub repo constants (used by the admin CMS) ---- */
+    var GH_OWNER = 'alainbindele';
+    var GH_REPO = 'alainbindele.github.io';
+    var GH_DATA_PATH = 'data/projects.json';
+    var GH_API = 'https://api.github.com';
+
+    var LANG_KEY = 'alain-portfolio-lang';
+    var TOKEN_KEY = 'alain-cms-token'; // sessionStorage only
+
+    /* ---- UI strings ---- */
+    var T = {
+      it: {
+        navProjects: 'Progetti', navContact: 'Contatti', navAbout: 'Chi Sono', navHome: 'Home',
+        heroTagline: 'Software Engineer specializzato in Java, Spring Boot e AWS Cloud',
+        heroBio: "Software Engineer con esperienza nello sviluppo backend e nella progettazione software, maturata in ambienti corporate e startup. Lavoro principalmente con Java, Spring Boot e RESTful API, con conoscenze operative su AWS, database relazionali e NoSQL. Mi interessano in particolare le architetture clean, i design pattern e le soluzioni che rendono i sistemi più manutenibili nel tempo. Ho avuto modo di contribuire anche in contesti di formazione tecnica e mentoring. Cerco di orientare il mio lavoro verso la chiarezza progettuale dall'inizio alla fine, la qualità del codice e la collaborazione di squadra.",
+        ctaAbout: 'Scopri di più', ctaProjects: 'Vedi Portfolio',
+        heroBadgeSys: 'Sistemi Distribuiti',
+        skillsTitle: 'Competenze Tecniche', skillsSub: 'Tecnologie e framework con cui lavoro quotidianamente',
+        pubTitle: 'Pubblicazioni', pubSub: 'Ricerca indipendente e contributi scientifici',
+        pubPaperTitle: "La Gerarchia Minima dell'Auto-Certificazione",
+        pubPaperAbstract: "Dimostro che l'auto-certificazione in aritmetica richiede esattamente due livelli di riflessione\u2014né più, né meno. Qualsiasi teoria ricorsivamente assiomatizzabile che definisce la verità per una teoria base T\u2080 e dimostra la propria correttezza necessariamente si frammenta in una gerarchia minima T\u2080 \u228a T\u2081 \u228a T\u2082. Il risultato stabilisce un vincolo strutturale preciso sulla conoscenza formale di sé: la verità può essere definita al livello uno, o certificata al livello due, ma mai entrambe nella stessa teoria.",
+        pubRead: 'Leggi la pubblicazione',
+        visit: 'Visita il progetto', discontinued: 'Dismesso',
+        contactTitle: 'Parliamone', contactSub: 'Aperto a collaborazioni, consulenze e buone idee.',
+        downloadCv: '↓ Scarica CV', footer: 'Fatto a Roma',
+        aboutTitle: 'Chi Sono',
+        aboutSubtitle: 'Software Engineer con oltre 20 anni di esperienza nello sviluppo, specializzato in backend (Java, Spring Boot e clean architecture).',
+        aboutProfileTitle: 'Profilo Professionale',
+        aboutProfileBody: 'Competente in sistemi distribuiti e soluzioni cloud (AWS), con un forte focus sulla manutenibilità del codice, le prestazioni e la qualità architetturale. Esperienza in ambienti Agile, con mentalità collaborativa, mentoring e formazione tecnica.',
+        aboutExpTag: '20+ anni di esperienza',
+        expTitle: 'Esperienza Lavorativa', eduTitle: 'Formazione', langTitle: 'Lingue', interestsTitle: 'Interessi', certTitle: 'Certificazioni',
+        adminTitle: 'Pannello CMS',
+        adminLoginHint: 'Inserisci un GitHub fine-grained Personal Access Token con accesso al repository per gestire i progetti.',
+        adminTokenNote: 'Il token resta in memoria solo per questa sessione.',
+        adminLogin: 'Accedi', adminChecking: 'Verifica…', adminLogout: 'Esci',
+        adminDashTitle: 'Progetti', adminAdd: 'Aggiungi progetto', adminEdit: 'Modifica', adminDelete: 'Elimina',
+        adminRedeployNote: 'GitHub Pages impiega ~1 minuto per ripubblicare dopo un salvataggio.',
+        formAdd: 'Nuovo progetto', formEdit: 'Modifica progetto', formTitleLabel: 'Titolo',
+        formDescIt: 'Descrizione (IT)', formDescEn: 'Descrizione (EN)', formCategory: 'Categoria',
+        formStatus: 'Stato', formTech: 'Tecnologie', formTechHint: 'Scrivi e premi Invio…',
+        formCancel: 'Annulla', formSave: 'Salva', formSaving: 'Salvataggio…',
+        statusActive: '● Attivo', statusDiscontinued: '○ Dismesso',
+        confirmDelete: 'Eliminare questo progetto?',
+        toastSaved: 'Salvato su GitHub', toastSaveError: 'Errore di salvataggio', toastDeleted: 'Progetto eliminato',
+        toastLoginError: 'Token non valido o senza accesso al repo',
+        catProjects: 'Progetti', catWebsites: 'Siti Web', catCollabs: 'Collaborazioni', activeLabel: 'Attivo'
+      },
+      en: {
+        navProjects: 'Projects', navContact: 'Contact', navAbout: 'About', navHome: 'Home',
+        heroTagline: 'Software Engineer specialized in Java, Spring Boot and AWS Cloud',
+        heroBio: 'Software Engineer with experience in backend development and software design, gained in both corporate and startup environments. I work mainly with Java, Spring Boot and RESTful APIs, with hands-on knowledge of AWS, relational and NoSQL databases. I am particularly interested in clean architectures, design patterns and solutions that make systems more maintainable over time. I have also contributed in technical training and mentoring contexts. I try to steer my work toward design clarity from start to finish, code quality and team collaboration.',
+        ctaAbout: 'Learn more', ctaProjects: 'View Portfolio',
+        heroBadgeSys: 'Distributed Systems',
+        skillsTitle: 'Technical Skills', skillsSub: 'Technologies and frameworks I work with every day',
+        pubTitle: 'Publications', pubSub: 'Independent research and scientific contributions',
+        pubPaperTitle: 'The Minimal Hierarchy of Self-Certification',
+        pubPaperAbstract: 'I prove that self-certification in arithmetic requires exactly two levels of reflection\u2014no more, no less. Any recursively axiomatizable theory that defines truth for a base theory T\u2080 and proves its own soundness necessarily fragments into a minimal hierarchy T\u2080 \u228a T\u2081 \u228a T\u2082. The result establishes a precise structural constraint on formal self-knowledge: truth can be defined at level one, or certified at level two, but never both within the same theory.',
+        pubRead: 'Read the publication',
+        visit: 'Visit project', discontinued: 'Discontinued',
+        contactTitle: "Let's talk", contactSub: 'Open to collaborations, consulting and good ideas.',
+        downloadCv: '↓ Download CV', footer: 'Made in Rome',
+        aboutTitle: 'About',
+        aboutSubtitle: 'Software Engineer with over 20 years of development experience, specialized in backend (Java, Spring Boot and clean architecture).',
+        aboutProfileTitle: 'Professional Profile',
+        aboutProfileBody: 'Skilled in distributed systems and cloud solutions (AWS), with a strong focus on code maintainability, performance and architectural quality. Experienced in Agile environments, with a collaborative mindset, mentoring and technical training.',
+        aboutExpTag: '20+ years of experience',
+        expTitle: 'Work Experience', eduTitle: 'Education', langTitle: 'Languages', interestsTitle: 'Interests', certTitle: 'Certifications',
+        adminTitle: 'CMS Panel',
+        adminLoginHint: 'Enter a GitHub fine-grained Personal Access Token with access to the repository to manage projects.',
+        adminTokenNote: 'Token is kept in memory for this session only.',
+        adminLogin: 'Sign in', adminChecking: 'Checking…', adminLogout: 'Sign out',
+        adminDashTitle: 'Projects', adminAdd: 'Add project', adminEdit: 'Edit', adminDelete: 'Delete',
+        adminRedeployNote: 'GitHub Pages takes ~1 minute to redeploy after a save.',
+        formAdd: 'New project', formEdit: 'Edit project', formTitleLabel: 'Title',
+        formDescIt: 'Description (IT)', formDescEn: 'Description (EN)', formCategory: 'Category',
+        formStatus: 'Status', formTech: 'Tech tags', formTechHint: 'Type and press Enter…',
+        formCancel: 'Cancel', formSave: 'Save', formSaving: 'Saving…',
+        statusActive: '● Active', statusDiscontinued: '○ Discontinued',
+        confirmDelete: 'Delete this project?',
+        toastSaved: 'Saved to GitHub', toastSaveError: 'Save failed', toastDeleted: 'Project deleted',
+        toastLoginError: 'Invalid token or no repo access',
+        catProjects: 'Projects', catWebsites: 'Websites', catCollabs: 'Collaborations', activeLabel: 'Active'
+      }
+    };
+
+    var SECTION_TITLES = {
+      projects: { it: 'Progetti', en: 'Projects' },
+      websites: { it: 'Siti Web', en: 'Websites' },
+      collaborations: { it: 'Collaborazioni', en: 'Collaborations' }
+    };
+
+    var SKILLS = [
+      { name: 'Java & Spring Boot', level: 95 },
+      { name: 'AWS Cloud', level: 85 },
+      { name: 'Microservices', level: 90 },
+      { name: 'Database Design', level: 88 },
+      { name: 'System Architecture', level: 92 },
+      { name: 'DevOps & CI/CD', level: 80 }
+    ];
+
+    var PUB_URL = 'https://zenodo.org/records/17768849';
+
+    /* ---- About page content (bilingual) ---- */
+    var ROME = { it: 'Roma, Italia', en: 'Rome, Italy' };
+    var ABOUT = {
+      experiences: [
+        { role: { it: 'Software Engineer', en: 'Software Engineer' }, company: 'Besafe',
+          period: { it: '2022 - Presente', en: '2022 - Present' }, location: ROME, bullets: [
+          { it: 'Backend developer in Java/Spring Boot con architetture modulari e DDD', en: 'Backend developer in Java/Spring Boot with modular architectures and DDD' },
+          { it: 'Refactoring con Clean Architecture e approccio Hexagonal (Ports & Adapters)', en: 'Refactoring with Clean Architecture and a Hexagonal (Ports & Adapters) approach' },
+          { it: 'Integrazione e orchestrazione di sistemi di pagamento usando AWS (EC2, Lambda, SQS)', en: 'Integration and orchestration of payment systems using AWS (EC2, Lambda, SQS)' },
+          { it: 'Ottimizzazione di Spring Batch per performance e osservabilità', en: 'Spring Batch optimization for performance and observability' },
+          { it: 'Collaborazione diretta con Operations per onboarding partner e task tecnici', en: 'Direct collaboration with Operations for partner onboarding and technical tasks' } ] },
+        { role: { it: 'Java Developer', en: 'Java Developer' }, company: 'Atex',
+          period: { it: '2021', en: '2021' }, location: { it: 'Da remoto', en: 'Remote' }, bullets: [
+          { it: 'Sviluppo di software gestionali per il settore editoriale su JBOSS usando Java e Angular', en: 'Development of management software for the publishing sector on JBOSS using Java and Angular' } ] },
+        { role: { it: 'Backend Developer', en: 'Backend Developer' }, company: 'M&G Holding',
+          period: { it: '2020', en: '2020' }, location: ROME, bullets: [
+          { it: 'Sviluppo di strumenti gestionali aziendali e siti web sullo stack XAMPP', en: 'Development of business management tools and websites on the XAMPP stack' } ] },
+        { role: { it: 'Fondatore e Consulente', en: 'Founder & Consultant' }, company: 'PC-Go Project',
+          period: { it: '2017 - 2020', en: '2017 - 2020' }, location: ROME, bullets: [
+          { it: 'Coordinamento e consulenza nello sviluppo software e formazione tecnica', en: 'Coordination and consulting in software development and technical training' },
+          { it: 'Macomoco: sviluppo sistema controllo remoto per macchine KUKA Robotics in Java', en: 'Macomoco: development of a remote-control system for KUKA Robotics machines in Java' },
+          { it: 'Baburka Production: programmatore sistemi, consulente e web designer WordPress', en: 'Baburka Production: systems programmer, consultant and WordPress web designer' },
+          { it: 'EffectUs Event: webmaster e consulente SEO', en: 'EffectUs Event: webmaster and SEO consultant' },
+          { it: 'Gameotic: responsabile sicurezza informatica, sysadmin Linux, sviluppatore PHP/JS', en: 'Gameotic: information security lead, Linux sysadmin, PHP/JS developer' } ] },
+        { role: { it: 'Consulente Software', en: 'Software Consultant' }, company: { it: 'Varie Aziende', en: 'Various Companies' },
+          period: { it: '2016 - 2017', en: '2016 - 2017' }, location: ROME, bullets: [
+          { it: 'Consulman Spa: ingegnere informatico e system administrator Linux/Windows Server', en: 'Consulman Spa: software engineer and Linux/Windows Server system administrator' },
+          { it: 'Matchin Srl: consulente, web developer e sistemista backend', en: 'Matchin Srl: consultant, web developer and backend systems engineer' },
+          { it: 'B-Wave Srl: sviluppatore web Ruby on Rails', en: 'B-Wave Srl: Ruby on Rails web developer' },
+          { it: 'D2P Solutions: docente linguaggi programmazione (Node.js, Linux)', en: 'D2P Solutions: programming languages instructor (Node.js, Linux)' },
+          { it: 'Gameotic: startup seed round', en: 'Gameotic: startup seed round' } ] },
+        { role: { it: 'Consulente e CTO', en: 'Consultant & CTO' }, company: { it: 'Progetti Vari', en: 'Various Projects' },
+          period: { it: '2015', en: '2015' }, location: ROME, bullets: [
+          { it: 'CTO del progetto Wallfarm', en: 'CTO of the Wallfarm project' },
+          { it: 'Continuazione collaborazione con Gameotic', en: 'Continued collaboration with Gameotic' },
+          { it: 'Consulenze e docenze per privati in ambito informatico', en: 'Consulting and teaching for private clients in IT' } ] },
+        { role: { it: 'Sviluppatore e System Administrator', en: 'Developer & System Administrator' }, company: 'AMI - Agenzia Multimediale Italiana',
+          period: { it: '2008 - 2010', en: '2008 - 2010' }, location: ROME, bullets: [
+          { it: 'Sviluppatore e amministratore di sistema junior', en: 'Junior developer and system administrator' },
+          { it: 'Installazione, configurazione e manutenzione di rete', en: 'Network installation, configuration and maintenance' },
+          { it: 'Docenze per privati in campo informatico', en: 'Teaching for private clients in IT' } ] },
+        { role: { it: 'System Administrator', en: 'System Administrator' }, company: 'Etabeta S.p.A.',
+          period: { it: '2005 (Mar - Ago)', en: '2005 (Mar - Aug)' }, location: ROME, bullets: [
+          { it: 'Amministratore di sistema junior', en: 'Junior system administrator' },
+          { it: 'Installazione e configurazione piattaforma produzione televisiva', en: 'Installation and configuration of a TV production platform' },
+          { it: 'Assistenza tecnica camere regia e montaggio per RAI/RTI', en: 'Technical support for control rooms and editing for RAI/RTI' } ] }
+      ],
+      education: [
+        { degree: { it: 'Laurea Magistrale in Informatica', en: "Master's Degree in Computer Science" },
+          school: 'La Sapienza University', year: '2014', location: ROME, notes: [
+          { it: "Facoltà di Ingegneria dell'Informazione, Informatica e Statistica.", en: 'Faculty of Information Engineering, Computer Science and Statistics.' },
+          { it: 'Tesi: Rate-It! A General Purpose Polling Platform', en: 'Thesis: Rate-It! A General Purpose Polling Platform' },
+          { it: 'Voto Finale: 109/110', en: 'Final Grade: 109/110' } ] },
+        { degree: { it: 'Laurea Triennale - Informatica', en: "Bachelor's Degree - Computer Science" },
+          school: 'La Sapienza University', year: '2010', location: ROME, notes: [] },
+        { degree: { it: 'Diploma - Perito Informatico', en: 'Diploma - Computer Science Technician' },
+          school: 'ITIS Enrico Fermi', year: '2002', location: ROME, notes: [] }
+      ],
+      languages: [
+        { flag: '🇮🇹', name: { it: 'Italiano', en: 'Italian' }, level: { it: 'Madrelingua', en: 'Native' } },
+        { flag: '🇬🇧', name: { it: 'Inglese', en: 'English' }, level: { it: 'Ottima competenza tecnica', en: 'Strong technical proficiency' } },
+        { flag: '🇫🇷', name: { it: 'Francese', en: 'French' }, level: { it: 'Conoscenza di base', en: 'Basic knowledge' } }
+      ],
+      interests: [
+        { it: 'Nuove tecnologie', en: 'New technologies' },
+        { it: 'Crescita personale', en: 'Personal growth' },
+        { it: 'Startups', en: 'Startups' },
+        { it: 'Arti marziali', en: 'Martial arts' },
+        { it: 'Lettura', en: 'Reading' },
+        { it: 'Meditazione', en: 'Meditation' }
+      ],
+      certifications: [
+        { name: 'ISIPM-base', issuer: { it: 'Italian Institute of Project Management (2011)', en: 'Italian Institute of Project Management (2011)' } }
+      ]
+    };
+
+    /* ================================================================
+       App state + helpers
+       ================================================================ */
+    var state = {
+      lang: 'en',
+      route: 'home',
+      projects: [],
+      token: null,
+      sha: null,
+      saving: false
+    };
+
+    // Escape helper for text interpolated into innerHTML
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+    function t() { return T[state.lang]; }
+    function sortedProjects() { return state.projects.slice().sort(function (a, b) { return (a.order || 0) - (b.order || 0); }); }
+
+    /* ---- Toasts ---- */
+    function toast(msg, ok) {
+      var host = document.getElementById('toasts');
+      var el = document.createElement('div');
+      el.className = 'toast ' + (ok ? 'ok' : 'err');
+      el.textContent = (ok ? '✓ ' : '⚠ ') + msg;
+      host.appendChild(el);
+      setTimeout(function () { el.remove(); }, 4000);
+    }
+
+    /* ================================================================
+       Data loading
+       ================================================================ */
+    function loadPublicData() {
+      fetch('data/projects.json', { cache: 'no-store' })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function (data) { state.projects = data; render(); })
+        .catch(function (e) { console.warn('Could not load data/projects.json', e); });
+    }
+
+    /* ================================================================
+       GitHub API (admin CMS)
+       ================================================================ */
+    function ghHeaders(token) {
+      return {
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28'
+      };
+    }
+
+    function login(token) {
+      token = (token || '').trim();
+      if (!token) return;
+      setLoginBusy(true);
+      fetch(GH_API + '/user', { headers: ghHeaders(token) })
+        .then(function (u) { if (!u.ok) throw new Error('user'); return fetch(GH_API + '/repos/' + GH_OWNER + '/' + GH_REPO, { headers: ghHeaders(token) }); })
+        .then(function (r) { if (!r.ok) throw new Error('repo'); state.token = token;
+          try { sessionStorage.setItem(TOKEN_KEY, token); } catch (e) {}
+          return fetchRemoteData(token); })
+        .then(function () { render(); })
+        .catch(function () { setLoginBusy(false); var err = document.getElementById('login-err'); if (err) { err.textContent = t().toastLoginError; err.classList.remove('hidden'); } });
+    }
+
+    function setLoginBusy(busy) {
+      var btn = document.getElementById('login-btn');
+      if (btn) { btn.textContent = busy ? t().adminChecking : t().adminLogin; btn.style.opacity = busy ? 0.6 : 1; }
+    }
+
+    function logout() {
+      try { sessionStorage.removeItem(TOKEN_KEY); } catch (e) {}
+      state.token = null; state.sha = null; render();
+    }
+
+    function fetchRemoteData(token) {
+      return fetch(GH_API + '/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_DATA_PATH, { headers: ghHeaders(token) })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function (body) {
+          var json = decodeURIComponent(escape(atob(body.content.replace(/\n/g, ''))));
+          state.projects = JSON.parse(json); state.sha = body.sha;
+        })
+        .catch(function (e) { console.warn('Contents API read failed, keeping local data', e); });
+    }
+
+    function saveToGitHub(projects, retried) {
+      var tr = t();
+      state.saving = true; renderAdmin();
+      var json = JSON.stringify(projects, null, 2);
+      var content = btoa(unescape(encodeURIComponent(json)));
+      return fetch(GH_API + '/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_DATA_PATH, {
+        method: 'PUT',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, ghHeaders(state.token)),
+        body: JSON.stringify({ message: 'cms: update projects', content: content, sha: state.sha })
+      }).then(function (res) {
+        if (res.status === 409 && !retried) {
+          return fetch(GH_API + '/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + GH_DATA_PATH, { headers: ghHeaders(state.token) })
+            .then(function (fr) { return fr.json(); })
+            .then(function (body) { state.sha = body.sha; state.saving = false; return saveToGitHub(projects, true); });
+        }
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json().then(function (body) { state.sha = body.content.sha; state.saving = false; toast(tr.toastSaved, true); return true; });
+      }).catch(function (e) {
+        console.warn('Save failed', e); state.saving = false; toast(tr.toastSaveError + ' — ' + e.message, false); renderAdmin(); return false;
+      });
+    }
+
+    function renumber(list) { return list.map(function (p, i) { return Object.assign({}, p, { order: i + 1 }); }); }
+
+    /* ================================================================
+       Rendering — navbar + language
+       ================================================================ */
+    function setLang(lang) {
+      state.lang = lang;
+      try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+      document.documentElement.lang = lang;
+      render();
+    }
+
+    function renderNav() {
+      var tr = t();
+      document.getElementById('lang-it').className = state.lang === 'it' ? 'on' : '';
+      document.getElementById('lang-en').className = state.lang === 'en' ? 'on' : '';
+      var links = document.getElementById('nav-links');
+      if (state.route === 'home') {
+        links.innerHTML =
+          '<button class="nav-link" onclick="App.scrollTo(\'projects\')">' + esc(tr.navProjects) + '</button>' +
+          '<button class="nav-link" onclick="App.scrollTo(\'contact\')">' + esc(tr.navContact) + '</button>' +
+          '<a class="nav-link" href="#/about">' + esc(tr.navAbout) + '</a>';
+      } else if (state.route === 'about') {
+        links.innerHTML = '<a class="nav-link" href="#/">' + esc(tr.navHome) + '</a>';
+      } else {
+        links.innerHTML = '';
+      }
+    }
+
+    function scrollToId(id) {
+      var el = document.getElementById(id);
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
+    }
+
+    /* ================================================================
+       Rendering — public home
+       ================================================================ */
+    function renderHome() {
+      var tr = t();
+      var sorted = sortedProjects();
+
+      var skills = SKILLS.map(function (s) {
+        return '<div class="skill glass">' +
+          '<div class="skill-head"><b>' + esc(s.name) + '</b><span>' + s.level + '</span></div>' +
+          '<div class="bar"><i style="width:' + s.level + '%"></i></div></div>';
+      }).join('');
+
+      var sections = ['projects', 'websites', 'collaborations'].map(function (cat) {
+        var items = sorted.filter(function (p) { return p.category === cat; });
+        if (!items.length) return '';
+        var st = SECTION_TITLES[cat];
+        var cards = items.map(function (p) {
+          var desc = (p.description && p.description[state.lang]) || '';
+          var disc = p.status === 'discontinued';
+          var fig = p.image ? '<div class="card-figure"><img src="' + esc(p.image) + '" alt="' + esc(p.title) + '" loading="lazy"></div>' : '';
+          var tags = (p.tech || []).map(function (x) { return '<span class="tag">' + esc(x) + '</span>'; }).join('');
+          return '<article class="card glass' + (disc ? ' dim' : '') + '">' + fig +
+            '<div class="card-head"><span class="emoji">' + esc(p.emoji) + '</span><h3>' + esc(p.title) + '</h3>' +
+            (disc ? '<span class="status">' + esc(tr.discontinued) + '</span>' : '') + '</div>' +
+            '<p class="card-desc">' + esc(desc) + '</p>' +
+            '<div class="tags">' + tags + '</div>' +
+            '<a class="visit" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(tr.visit) + ' →</a></article>';
+        }).join('');
+        return '<section class="block">' +
+          '<div class="section-pill glass-strong"><h2>' + esc(st.it) + ' / ' + esc(st.en) + '</h2>' +
+          '<span class="count">' + String(items.length).padStart(2, '0') + '</span></div>' +
+          '<div class="cards">' + cards + '</div></section>';
+      }).join('');
+
+      return '<main>' +
+        /* Hero */
+        '<section id="hero"><div class="hero-card">' +
+          '<div class="hero-text">' +
+            '<p class="hero-loc">Roma, Italia · 41.9°N 12.5°E</p>' +
+            '<h1>Alain Bindele</h1>' +
+            '<p class="hero-tagline">' + esc(tr.heroTagline) + '</p>' +
+            '<p class="hero-bio">' + esc(tr.heroBio) + '</p>' +
+            '<div class="hero-badges">' +
+              '<span class="badge badge-teal">' + esc(tr.aboutExpTag) + '</span>' +
+              '<span class="badge badge-violet">Clean Architecture</span>' +
+              '<span class="badge badge-violet">' + esc(tr.heroBadgeSys) + '</span>' +
+            '</div>' +
+            '<div class="hero-cta">' +
+              '<a class="btn btn-primary" href="#/about">' + esc(tr.ctaAbout) + '</a>' +
+              '<button class="btn btn-ghost" onclick="App.scrollTo(\'projects\')">' + esc(tr.ctaProjects) + '</button>' +
+            '</div>' +
+          '</div>' +
+          '<img class="hero-photo" src="assets/alain.jpg" alt="Alain Bindele">' +
+        '</div></section>' +
+
+        /* Skills */
+        '<section class="block" style="padding-top:20px">' +
+          '<div class="section-pill glass-strong" style="margin-bottom:8px"><h2>' + esc(tr.skillsTitle) + '</h2></div>' +
+          '<p class="section-sub">' + esc(tr.skillsSub) + '</p>' +
+          '<div class="skills-grid">' + skills + '</div></section>' +
+
+        /* Publication */
+        '<section class="block">' +
+          '<div class="section-pill glass-strong" style="margin-bottom:8px"><h2>' + esc(tr.pubTitle) + '</h2></div>' +
+          '<p class="section-sub">' + esc(tr.pubSub) + '</p>' +
+          '<div class="pub glass"><div class="pub-icon">📄</div><div class="pub-body">' +
+            '<h3>' + esc(tr.pubPaperTitle) + '</h3><p>' + esc(tr.pubPaperAbstract) + '</p>' +
+            '<a class="pub-link" href="' + esc(PUB_URL) + '" target="_blank" rel="noopener">' + esc(tr.pubRead) + ' ↗</a>' +
+          '</div></div></section>' +
+
+        /* Projects */
+        '<div id="projects" style="padding-top:20px">' + sections + '</div>' +
+
+        /* Contact */
+        '<section id="contact" style="padding:20px 0 80px">' +
+          '<div class="contact-card">' +
+            '<h2>' + esc(tr.contactTitle) + '</h2><p>' + esc(tr.contactSub) + '</p>' +
+            '<div class="contact-links">' +
+              '<a href="mailto:alain.bindele@gmail.com">✉️ Email</a>' +
+              '<a href="https://github.com/alainbindele" target="_blank" rel="noopener">GitHub</a>' +
+              '<a href="https://www.linkedin.com/in/alainbindele" target="_blank" rel="noopener">LinkedIn</a>' +
+              '<a class="cv" href="cv.pdf" download="Alain-CV.pdf">' + esc(tr.downloadCv) + '</a>' +
+            '</div>' +
+          '</div>' +
+          '<p class="foot">© 2026 Alain Bindele · ' + esc(tr.footer) + '</p>' +
+        '</section>' +
+      '</main>';
+    }
+
+    /* ================================================================
+       Rendering — about page
+       ================================================================ */
+    function renderAbout() {
+      var tr = t(), L = state.lang;
+      var exp = ABOUT.experiences.map(function (e) {
+        var company = typeof e.company === 'string' ? e.company : e.company[L];
+        var bullets = e.bullets.map(function (b) { return '<li><span>' + esc(b[L]) + '</span></li>'; }).join('');
+        return '<article class="exp glass"><div class="exp-head">' +
+          '<div><h3>' + esc(e.role[L]) + '</h3><p class="company">' + esc(company) + '</p></div>' +
+          '<div class="exp-meta"><div class="period">🗓 ' + esc(e.period[L]) + '</div><div>📍 ' + esc(e.location[L]) + '</div></div>' +
+          '</div><ul>' + bullets + '</ul></article>';
+      }).join('');
+
+      var edu = ABOUT.education.map(function (ed) {
+        var notes = ed.notes.map(function (n) { return '<p class="note">' + esc(n[L]) + '</p>'; }).join('');
+        return '<div class="edu"><h3>' + esc(ed.degree[L]) + '</h3><p class="school">' + esc(ed.school) + '</p>' +
+          '<div class="meta"><span>' + esc(ed.year) + '</span><span>·</span><span>' + esc(ed.location[L]) + '</span></div>' + notes + '</div>';
+      }).join('');
+
+      var langs = ABOUT.languages.map(function (lg) {
+        return '<div class="lang-row"><span class="flag">' + lg.flag + '</span><div><b>' + esc(lg.name[L]) + '</b><small>' + esc(lg.level[L]) + '</small></div></div>';
+      }).join('');
+
+      var interests = ABOUT.interests.map(function (i) { return '<span class="chip">' + esc(i[L]) + '</span>'; }).join('');
+      var certs = ABOUT.certifications.map(function (c) { return '<div class="cert"><h3>' + esc(c.name) + '</h3><p>' + esc(c.issuer[L]) + '</p></div>'; }).join('');
+
+      return '<main class="narrow pad-top">' +
+        '<div class="about-head"><h1>' + esc(tr.aboutTitle) + '</h1><p>' + esc(tr.aboutSubtitle) + '</p></div>' +
+
+        '<div class="profile">' +
+          '<div class="profile-photo"><img src="assets/alain.jpg" alt="Alain Bindele"></div>' +
+          '<div class="profile-body"><h2>' + esc(tr.aboutProfileTitle) + '</h2><p>' + esc(tr.aboutProfileBody) + '</p>' +
+            '<div class="hero-badges" style="margin:0">' +
+              '<span class="badge badge-teal">📍 Roma, Italia</span>' +
+              '<span class="badge badge-violet">🗓 ' + esc(tr.aboutExpTag) + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="section-pill glass-strong"><h2>' + esc(tr.expTitle) + '</h2></div>' +
+        '<div class="exp-list">' + exp + '</div>' +
+
+        '<div class="two-col">' +
+          '<div class="info-card glass"><h2>🎓 ' + esc(tr.eduTitle) + '</h2><div class="stack">' + edu + '</div></div>' +
+          '<div class="info-card glass"><h2>🌐 ' + esc(tr.langTitle) + '</h2><div class="stack">' + langs + '</div></div>' +
+        '</div>' +
+        '<div class="two-col" style="margin-bottom:80px">' +
+          '<div class="info-card glass"><h2>💜 ' + esc(tr.interestsTitle) + '</h2><div class="chips">' + interests + '</div></div>' +
+          '<div class="info-card glass"><h2>🏅 ' + esc(tr.certTitle) + '</h2><div class="stack">' + certs + '</div></div>' +
+        '</div>' +
+      '</main>';
+    }
+
+    /* ================================================================
+       Rendering — admin (login + dashboard + form)
+       ================================================================ */
+    var editingId = null, formData = null, techInput = '', dragIndex = null;
+
+    function renderAdmin() {
+      var tr = t();
+      var host = document.getElementById('view');
+      if (!state.token) {
+        host.innerHTML = '<main class="admin pad-top">' +
+          '<div class="login"><h1>' + esc(tr.adminTitle) + '</h1><p class="hint">' + esc(tr.adminLoginHint) + '</p>' +
+          '<input id="login-token" class="field mono" type="password" placeholder="github_pat_…">' +
+          '<p id="login-err" class="err hidden"></p>' +
+          '<button id="login-btn" class="btn btn-primary" style="width:100%;margin-top:14px" onclick="App.login()">' + esc(tr.adminLogin) + '</button>' +
+          '<p class="note">🔒 ' + esc(tr.adminTokenNote) + '</p></div></main>';
+        var inp = document.getElementById('login-token');
+        inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') App.login(); });
+        return;
+      }
+      // Dashboard
+      var sorted = sortedProjects();
+      var catLabel = { projects: tr.catProjects, websites: tr.catWebsites, collaborations: tr.catCollabs };
+      var rows = sorted.map(function (p, i) {
+        var statusLabel = p.status === 'discontinued' ? tr.discontinued : tr.activeLabel;
+        return '<div class="row glass" draggable="true" data-i="' + i + '" data-id="' + esc(p.id) + '">' +
+          '<span class="grip">⠿</span><span class="r-emoji">' + esc(p.emoji) + '</span>' +
+          '<div class="r-body"><div class="r-title">' + esc(p.title) + '</div>' +
+          '<div class="r-meta">' + esc(catLabel[p.category] || p.category) + ' · ' + esc(statusLabel) + '</div></div>' +
+          '<button class="pill-btn edit" onclick="App.editProject(\'' + esc(p.id) + '\')">' + esc(tr.adminEdit) + '</button>' +
+          '<button class="pill-btn del" onclick="App.deleteProject(\'' + esc(p.id) + '\')">' + esc(tr.adminDelete) + '</button></div>';
+      }).join('');
+
+      host.innerHTML = '<main class="admin pad-top">' +
+        '<div class="banner"><span>⏱</span><span>' + esc(tr.adminRedeployNote) + '</span></div>' +
+        '<div class="dash-head"><h1>' + esc(tr.adminDashTitle) + '</h1><div style="display:flex;gap:10px">' +
+          '<button class="pill-btn add" onclick="App.addProject()">+ ' + esc(tr.adminAdd) + '</button>' +
+          '<button class="pill-btn logout" onclick="App.logout()">' + esc(tr.adminLogout) + '</button></div></div>' +
+        '<div id="rows">' + rows + '</div></main>';
+
+      wireDragAndDrop();
+      if (formData) renderForm();
+    }
+
+    function wireDragAndDrop() {
+      var rowsEl = document.getElementById('rows');
+      if (!rowsEl) return;
+      Array.prototype.forEach.call(rowsEl.children, function (row) {
+        row.addEventListener('dragstart', function () { dragIndex = +row.getAttribute('data-i'); row.classList.add('dragging'); });
+        row.addEventListener('dragend', function () { dragIndex = null; row.classList.remove('dragging'); });
+        row.addEventListener('dragover', function (e) { e.preventDefault(); });
+        row.addEventListener('drop', function (e) {
+          e.preventDefault();
+          var to = +row.getAttribute('data-i');
+          if (dragIndex === null || dragIndex === to) return;
+          var list = sortedProjects();
+          var moved = list.splice(dragIndex, 1)[0];
+          list.splice(to, 0, moved);
+          state.projects = renumber(list);
+          renderAdmin();
+          saveToGitHub(state.projects);
+        });
+      });
+    }
+
+    function emptyForm() {
+      return { id: null, emoji: '✨', title: '', descIt: '', descEn: '', category: 'projects', tech: [], url: '', status: 'active', image: '' };
+    }
+
+    function renderForm() {
+      var tr = t(), f = formData;
+      var existing = document.getElementById('modal');
+      if (existing) existing.remove();
+      var chips = f.tech.map(function (name, i) {
+        return '<span class="c">' + esc(name) + '<button onclick="App.removeTech(' + i + ')">×</button></span>';
+      }).join('');
+      var modal = document.createElement('div');
+      modal.className = 'modal'; modal.id = 'modal';
+      modal.innerHTML = '<div class="modal-box"><h2>' + esc(editingId ? tr.formEdit : tr.formAdd) + '</h2>' +
+        '<div class="form-grid">' +
+          '<div><label class="form-label">Emoji</label><input class="field" id="f-emoji" style="text-align:center;font-size:18px" value="' + esc(f.emoji) + '"></div>' +
+          '<div><label class="form-label">' + esc(tr.formTitleLabel) + '</label><input class="field" id="f-title" value="' + esc(f.title) + '"></div>' +
+        '</div>' +
+        '<label class="form-label">' + esc(tr.formDescIt) + '</label><textarea class="field" id="f-desc-it" rows="3">' + esc(f.descIt) + '</textarea>' +
+        '<label class="form-label">' + esc(tr.formDescEn) + '</label><textarea class="field" id="f-desc-en" rows="3">' + esc(f.descEn) + '</textarea>' +
+        '<div class="form-grid-2">' +
+          '<div><label class="form-label">' + esc(tr.formCategory) + '</label><select class="field" id="f-cat">' +
+            '<option value="projects"' + (f.category === 'projects' ? ' selected' : '') + '>Progetti / Projects</option>' +
+            '<option value="websites"' + (f.category === 'websites' ? ' selected' : '') + '>Siti Web / Websites</option>' +
+            '<option value="collaborations"' + (f.category === 'collaborations' ? ' selected' : '') + '>Collaborazioni / Collaborations</option>' +
+          '</select></div>' +
+          '<div><label class="form-label">' + esc(tr.formStatus) + '</label><button class="field" id="f-status" style="cursor:pointer;text-align:left;font-weight:600;color:' + (f.status === 'active' ? '#9fe8dd' : '#8a93ab') + '" onclick="App.toggleStatus()">' + esc(f.status === 'active' ? tr.statusActive : tr.statusDiscontinued) + '</button></div>' +
+        '</div>' +
+        '<label class="form-label">URL</label><input class="field mono" id="f-url" placeholder="https://…" value="' + esc(f.url) + '" style="margin-bottom:12px">' +
+        '<label class="form-label">' + esc(tr.formTech) + '</label>' +
+        '<div class="chips-input">' + chips + '<input id="f-tech" placeholder="' + esc(tr.formTechHint) + '" value="' + esc(techInput) + '"></div>' +
+        '<div class="form-actions">' +
+          '<button class="pill-btn logout" onclick="App.closeForm()">' + esc(tr.formCancel) + '</button>' +
+          '<button class="pill-btn add" id="save-btn" onclick="App.submitForm()" style="opacity:' + (state.saving ? 0.6 : 1) + '">' + esc(state.saving ? tr.formSaving : tr.formSave) + '</button>' +
+        '</div></div>';
+      document.getElementById('view').appendChild(modal);
+
+      // Keep form fields bound to formData
+      modal.querySelector('#f-emoji').addEventListener('input', function (e) { f.emoji = e.target.value; });
+      modal.querySelector('#f-title').addEventListener('input', function (e) { f.title = e.target.value; });
+      modal.querySelector('#f-desc-it').addEventListener('input', function (e) { f.descIt = e.target.value; });
+      modal.querySelector('#f-desc-en').addEventListener('input', function (e) { f.descEn = e.target.value; });
+      modal.querySelector('#f-cat').addEventListener('change', function (e) { f.category = e.target.value; });
+      modal.querySelector('#f-url').addEventListener('input', function (e) { f.url = e.target.value; });
+      var techEl = modal.querySelector('#f-tech');
+      techEl.addEventListener('input', function (e) { techInput = e.target.value; });
+      techEl.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ',') {
+          e.preventDefault();
+          var tag = techInput.trim();
+          if (tag && f.tech.indexOf(tag) === -1) f.tech.push(tag);
+          techInput = ''; renderForm();
+        } else if (e.key === 'Backspace' && !techInput && f.tech.length) {
+          f.tech.pop(); renderForm();
+        }
+      });
+      techEl.focus();
+    }
+
+    /* ================================================================
+       Public API (used by inline onclick handlers)
+       ================================================================ */
+    window.App = {
+      setLang: setLang,
+      scrollTo: scrollToId,
+      login: function () { var el = document.getElementById('login-token'); login(el ? el.value : ''); },
+      logout: logout,
+      addProject: function () { editingId = null; techInput = ''; formData = emptyForm(); renderForm(); },
+      editProject: function (id) {
+        var p = state.projects.filter(function (x) { return x.id === id; })[0];
+        if (!p) return;
+        editingId = id; techInput = '';
+        formData = { id: p.id, emoji: p.emoji, title: p.title,
+          descIt: (p.description && p.description.it) || '', descEn: (p.description && p.description.en) || '',
+          category: p.category, tech: (p.tech || []).slice(), url: p.url || '', status: p.status || 'active', image: p.image || '' };
+        renderForm();
+      },
+      deleteProject: function (id) {
+        if (!window.confirm(t().confirmDelete)) return;
+        state.projects = renumber(sortedProjects().filter(function (x) { return x.id !== id; }));
+        renderAdmin();
+        saveToGitHub(state.projects).then(function (ok) { if (ok) toast(t().toastDeleted, true); });
+      },
+      toggleStatus: function () { formData.status = formData.status === 'active' ? 'discontinued' : 'active'; renderForm(); },
+      removeTech: function (i) { formData.tech.splice(i, 1); renderForm(); },
+      closeForm: function () { formData = null; var m = document.getElementById('modal'); if (m) m.remove(); },
+      submitForm: function () {
+        var f = formData;
+        if (!f.title.trim() || state.saving) return;
+        var pending = techInput.trim();
+        var tech = pending && f.tech.indexOf(pending) === -1 ? f.tech.concat([pending]) : f.tech;
+        var id = f.id || f.title.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        var record = { id: id, emoji: f.emoji || '✨', title: f.title.trim(), category: f.category,
+          description: { it: f.descIt.trim(), en: f.descEn.trim() }, tech: tech, url: f.url.trim(), status: f.status, order: 0 };
+        if (f.image) record.image = f.image;
+        var list;
+        if (editingId) {
+          list = state.projects.map(function (p) { return p.id === editingId ? Object.assign(record, { order: p.order, image: record.image || p.image }) : p; });
+        } else {
+          list = state.projects.concat([record]);
+        }
+        state.projects = renumber(list);
+        renderAdmin();
+        saveToGitHub(state.projects).then(function (ok) { if (ok) App.closeForm(); });
+      }
+    };
+
+    /* ================================================================
+       Router
+       ================================================================ */
+    function parseRoute() {
+      var r = (window.location.hash || '').replace(/^#\/?/, '');
+      if (r === 'admin') return 'admin';
+      if (r === 'about') return 'about';
+      return 'home';
+    }
+
+    function render() {
+      renderNav();
+      if (state.route === 'admin') { renderAdmin(); return; }
+      var host = document.getElementById('view');
+      host.innerHTML = state.route === 'about' ? renderAbout() : renderHome();
+      window.scrollTo(0, 0);
+    }
+
+    function onHash() {
+      var prev = state.route;
+      state.route = parseRoute();
+      if (state.route === 'admin' && !state.token) { try { state.token = sessionStorage.getItem(TOKEN_KEY); } catch (e) {} }
+      render();
+    }
+
+    /* ================================================================
+       Init
+       ================================================================ */
+    (function init() {
+      var lang = null;
+      try { lang = localStorage.getItem(LANG_KEY); } catch (e) {}
+      if (lang !== 'it' && lang !== 'en') lang = (navigator.language || '').toLowerCase().indexOf('it') === 0 ? 'it' : 'en';
+      state.lang = lang;
+      document.documentElement.lang = lang;
+      try { state.token = sessionStorage.getItem(TOKEN_KEY); } catch (e) {}
+      state.route = parseRoute();
+      window.addEventListener('hashchange', onHash);
+      render();
+      loadPublicData();
+    })();
+  })();
+  </script>
+</body>
+</html>
