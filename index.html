@@ -88,30 +88,31 @@
     /* ============================================================
        Navbar (glass pill)
        ============================================================ */
-    nav.bar {
-      position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 50;
-      display: flex; align-items: center; gap: 8px;
-      padding: 8px 10px 8px 20px; border-radius: 999px;
+    nav.navbar {
+      position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 50;
+      display: flex; align-items: center; gap: 14px;
+      padding: 11px 12px 11px 26px; border-radius: 999px;
       background: rgba(16, 20, 38, 0.55);
       backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: var(--hairline-top), 0 8px 32px rgba(0, 0, 0, 0.4);
       max-width: calc(100vw - 32px);
     }
-    .brand { font-weight: 700; font-size: 16px; color: #f0f3fb; margin-right: 8px; }
+    .brand { font-weight: 700; font-size: 17px; color: #f0f3fb; margin-right: 10px; }
     .brand span { color: var(--accent); }
     .nav-link {
-      background: none; border: none; color: var(--ink-soft); font-size: 14px;
-      padding: 8px 12px; border-radius: 999px; cursor: pointer;
+      background: none; border: none; color: var(--ink-soft); font-size: 15px;
+      padding: 9px 16px; border-radius: 999px; cursor: pointer;
       white-space: nowrap; transition: all 0.2s;
     }
     .nav-link:hover { color: #fff; background: rgba(255, 255, 255, 0.08); }
-    .lang { display: flex; gap: 2px; padding: 3px; border-radius: 999px; margin-left: 6px;
+    .lang { display: flex; gap: 2px; padding: 4px; border-radius: 999px; margin-left: 4px;
       background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); }
-    .lang button { border: none; cursor: pointer; font-size: 12px; font-weight: 600;
-      letter-spacing: 0.05em; padding: 5px 12px; border-radius: 999px; background: transparent;
+    .lang button { border: none; cursor: pointer; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.05em; padding: 6px 14px; border-radius: 999px; background: transparent;
       color: var(--ink-mute); transition: all 0.25s; }
-    .lang button.on { background: rgba(255, 255, 255, 0.16); color: #fff; }
+    .lang button.on { background: rgba(244, 246, 252, 0.95); color: #0a0e1c;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); }
 
     /* ============================================================
        Layout
@@ -376,8 +377,8 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="bar">
-    <a href="#/" class="brand">alain<span>.</span></a>
+  <nav class="navbar">
+    <a href="#/" class="brand" onclick="App.goTop(event)">Home<span>.</span></a>
     <div id="nav-links"></div>
     <div class="lang">
       <button id="lang-it" onclick="App.setLang('it')">IT</button>
@@ -724,6 +725,15 @@
       if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
     }
 
+    function goTop(ev) {
+      if (ev) ev.preventDefault();
+      if ((location.hash || '#/') === '#/' || location.hash === '') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        location.hash = '#/';
+      }
+    }
+
     /* ================================================================
        Rendering — public home
        ================================================================ */
@@ -997,6 +1007,7 @@
     window.App = {
       setLang: setLang,
       scrollTo: scrollToId,
+      goTop: goTop,
       login: function () { var el = document.getElementById('login-token'); login(el ? el.value : ''); },
       logout: logout,
       addProject: function () { editingId = null; techInput = ''; formData = emptyForm(); renderForm(); },
