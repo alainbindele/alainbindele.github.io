@@ -1,0 +1,175 @@
+[
+  {
+    "id": "fire-calculator",
+    "emoji": "🔥",
+    "title": "FIRE Calculator",
+    "category": "projects",
+    "description": {
+      "it": "Vuoi sapere quanti anni di lavoro ti separano dalla libertà finanziaria? FIRE Calculator fa i conti per te. Inserisci risparmi, investimenti e spese, e scopri quando potrai dire addio allo stress da stipendio e vivere di rendita. Un calcolatore semplice ma potente, pensato per chi vuole pianificare il proprio percorso verso il FIRE (Financial Independence, Retire Early) senza perdersi nei dettagli tecnici.",
+      "en": "Want to know how many working years separate you from financial freedom? FIRE Calculator does the math for you. Enter your savings, investments and expenses, and find out when you can say goodbye to paycheck stress and live off your assets. A simple yet powerful calculator, built for anyone who wants to plan their path to FIRE (Financial Independence, Retire Early) without getting lost in technical details."
+    },
+    "tech": [
+      "TypeScript",
+      "D3.js"
+    ],
+    "url": "https://www.firecalculator.info",
+    "status": "active",
+    "order": 1,
+    "image": "assets/projects/fire-calculator.jpg"
+  },
+  {
+    "id": "portfolio-balancer",
+    "emoji": "📊",
+    "title": "PortfolioBalancer",
+    "category": "projects",
+    "description": {
+      "it": "PortfolioBalancer è lo strumento gratuito e privato che ti aiuta a mantenere il tuo portafoglio di investimenti sempre in equilibrio. Inserisci i tuoi asset, e in pochi secondi scopri se sei troppo esposto su un settore o se stai seguendo la rotta giusta verso i tuoi obiettivi. Niente raccolta dati, niente complicazioni: solo chiarezza, controllo e decisioni più intelligenti per il tuo futuro finanziario.",
+      "en": "PortfolioBalancer is the free, private tool that helps you keep your investment portfolio always in balance. Enter your assets and in seconds find out whether you're overexposed to a sector or on the right track toward your goals. No data collection, no complications: just clarity, control and smarter decisions for your financial future."
+    },
+    "tech": [
+      "TypeScript"
+    ],
+    "url": "https://www.portfoliobalancer.info",
+    "status": "active",
+    "order": 2,
+    "image": "assets/projects/portfolio-balancer.jpg"
+  },
+  {
+    "id": "devt00ls",
+    "emoji": "🛠️",
+    "title": "Devt00ls",
+    "category": "projects",
+    "description": {
+      "it": "Devt00ls.com è una raccolta di strumenti per sviluppatori moderna e intuitiva, progettata per semplificare le attività quotidiane di programmazione. Include converter tra formati (JSON, YAML, CSV), generatori di POJO, UUID e cron expression, decodificatori JWT, tester per regex e molto altro. Tutti i tool sono rapidi, accessibili via web e pensati per migliorare la produttività degli sviluppatori.",
+      "en": "Devt00ls.com is a modern, intuitive collection of developer tools designed to simplify everyday programming tasks. It includes format converters (JSON, YAML, CSV), POJO, UUID and cron expression generators, JWT decoders, regex testers and much more. All tools are fast, accessible from the web and built to boost developer productivity."
+    },
+    "tech": [
+      "AI"
+    ],
+    "url": "https://devt00ls.com/",
+    "status": "active",
+    "order": 3,
+    "image": "assets/projects/devt00ls.jpg"
+  },
+  {
+    "id": "piante-grasse",
+    "emoji": "🌱",
+    "title": "Piante Grasse",
+    "category": "projects",
+    "description": {
+      "it": "Piante-grasse.com è il tuo archivio intelligente di succulente: un catalogo con schede botaniche, foto HD e filtri avanzati. L'IA risponde in linguaggio naturale, suggerisce coltivazione, esposizione, substrato, irrigazione e propagazione, riconosce parassiti e patologie, propone rimedi, confronta specie e genera piani stagionali personalizzati. Scopri tassonomia, provenienza e rusticità, crea liste di preferiti e ricevi alert utili per mantenere le tue piante sane, belle e longeve.",
+      "en": "Piante-grasse.com is your smart succulent archive: a catalog with botanical sheets, HD photos and advanced filters. The AI answers in natural language, advises on cultivation, exposure, substrate, watering and propagation, recognizes pests and diseases, suggests remedies, compares species and generates personalized seasonal plans. Discover taxonomy, origin and hardiness, build favorites lists and get useful alerts to keep your plants healthy, beautiful and long-lived."
+    },
+    "tech": [
+      "AI"
+    ],
+    "url": "https://www.piante-grasse.com",
+    "status": "active",
+    "order": 4,
+    "image": "assets/projects/piante-grasse.png"
+  },
+  {
+    "id": "notificamy",
+    "emoji": "📩",
+    "title": "Notificamy",
+    "category": "projects",
+    "description": {
+      "it": "Notificamy è l'assistente intelligente che trasforma i tuoi promemoria in azioni concrete. Basta scrivere in linguaggio naturale cosa vuoi ricordare, e Notificamy penserà al resto: email, Slack, WhatsApp o altri canali, sempre al momento giusto. Niente più scadenze dimenticate, niente più confusione tra mille app diverse: un solo posto, un solo comando, notifiche ovunque ti servano.",
+      "en": "Notificamy is the smart assistant that turns your reminders into concrete actions. Just write in natural language what you want to remember, and Notificamy takes care of the rest: email, Slack, WhatsApp or other channels, always at the right time. No more missed deadlines, no more confusion across a dozen different apps: one place, one command, notifications wherever you need them."
+    },
+    "tech": [
+      "Spring Boot",
+      "Lambda",
+      "TypeScript"
+    ],
+    "url": "https://www.notificamy.com",
+    "status": "discontinued",
+    "order": 5,
+    "image": "assets/projects/notificamy.jpg"
+  },
+  {
+    "id": "the-art-of-jaxs",
+    "emoji": "🎨",
+    "title": "The Art Of Jaxs",
+    "category": "websites",
+    "description": {
+      "it": "JAXS è un artista romano che esplora la pittura come strumento per indagare gli strati invisibili della realtà. La sua ricerca parte dalle radici africane e si traduce in un linguaggio visivo che fonde tradizione e contemporaneità, dando forma agli stati emotivi della mente umana. Le sue opere incarnano una ripetizione nella variazione, un'anatomia della coscienza che dialoga con l'afrofuturismo, cifra distintiva della sua visione artistica.",
+      "en": "JAXS is a Roman artist who explores painting as a tool to investigate the invisible layers of reality. His research starts from African roots and translates into a visual language that blends tradition and contemporaneity, giving form to the emotional states of the human mind. His works embody a repetition within variation, an anatomy of consciousness that dialogues with afrofuturism, the hallmark of his artistic vision."
+    },
+    "tech": [
+      "WordPress"
+    ],
+    "url": "https://www.theartofjaxs.com/",
+    "status": "active",
+    "order": 6,
+    "image": "assets/projects/the-art-of-jaxs.jpg"
+  },
+  {
+    "id": "luca-margarita",
+    "emoji": "🎧",
+    "title": "Luca Margarita",
+    "category": "websites",
+    "description": {
+      "it": "Luca Margarita è un DJ e producer che unisce tecnica, passione e ricerca musicale. Perfezionista sul palco, cura ogni dettaglio dei suoi set, spaziando dalla house alla minimal techno con un approccio sempre originale. Grazie alla formazione in musica elettronica ha creato un proprio studio di registrazione, dove sviluppa competenze avanzate di mixaggio e mastering. Negli ultimi anni ha ampliato la sua esperienza anche in ambito radiofonico, firmando la regia di programmi dedicati al mondo della musica.",
+      "en": "Luca Margarita is a DJ and producer who combines technique, passion and musical research. A perfectionist on stage, he cares for every detail of his sets, ranging from house to minimal techno with an always original approach. Thanks to his training in electronic music he built his own recording studio, where he develops advanced mixing and mastering skills. In recent years he has also expanded into radio, directing programs dedicated to the world of music."
+    },
+    "tech": [
+      "WordPress"
+    ],
+    "url": "https://www.lucamargarita.it",
+    "status": "active",
+    "order": 7,
+    "image": "assets/projects/luca-margarita.jpg"
+  },
+  {
+    "id": "hiphop-cinefest",
+    "emoji": "🎬",
+    "title": "HipHop Cinefest",
+    "category": "websites",
+    "description": {
+      "it": "Hip Hop Cine Fest è un evento unico in Italia e tra i pochi al mondo dedicati al rapporto tra Hip Hop e cinema. Per due giorni Roma diventa il punto d'incontro di artisti, studiosi, appassionati ed esperti che vedono nell'Hip Hop non solo un linguaggio artistico, ma anche un potente strumento di narrazione e trasformazione sociale. Il festival affronta temi centrali come femminismo Hip Hop, genere e diversità, empowerment, educazione civica e artistica, fino alle nuove sperimentazioni cinematografiche.",
+      "en": "Hip Hop Cine Fest is a unique event in Italy and one of the few in the world dedicated to the relationship between Hip Hop and cinema. For two days Rome becomes the meeting point of artists, scholars, enthusiasts and experts who see in Hip Hop not only an artistic language, but also a powerful tool for storytelling and social transformation. The festival tackles central themes such as Hip Hop feminism, gender and diversity, empowerment, civic and artistic education, and new cinematic experimentation."
+    },
+    "tech": [
+      "WordPress"
+    ],
+    "url": "https://hiphopcinefest.org/",
+    "status": "active",
+    "order": 8,
+    "image": "assets/projects/hiphop-cinefest.jpg"
+  },
+  {
+    "id": "baburka-production",
+    "emoji": "🎥",
+    "title": "Baburka Production",
+    "category": "websites",
+    "description": {
+      "it": "Baburka Production è un laboratorio creativo che unisce passione, professionalità e innovazione per dar vita a un cinema di qualità. Attraverso la sua sezione Production e il reparto Factory FX, l'azienda offre una rete di talenti e competenze capaci di coprire tutte le fasi della produzione audiovisiva. Al centro ci sono i professionisti, persone che hanno scelto il cinema come vocazione e che contribuiscono a un sistema basato su collaborazione, scambio di conoscenze e ricerca continua.",
+      "en": "Baburka Production is a creative lab that combines passion, professionalism and innovation to bring quality cinema to life. Through its Production division and Factory FX department, the company offers a network of talent and skills able to cover every phase of audiovisual production. At its heart are the professionals, people who have chosen cinema as a vocation and who contribute to a system based on collaboration, knowledge sharing and continuous research."
+    },
+    "tech": [
+      "WordPress"
+    ],
+    "url": "https://baburkaproduction.com/",
+    "status": "active",
+    "order": 9,
+    "image": "assets/projects/baburka-production.jpg"
+  },
+  {
+    "id": "greensound-project",
+    "emoji": "🌿",
+    "title": "Greensound Project",
+    "category": "collaborations",
+    "description": {
+      "it": "Greensound nasce dall'idea di creare un ponte tra il mondo naturale e quello tecnologico, trasformando l'energia elettrica delle piante in musica. Attraverso sensori avanzati, catturiamo le variazioni elettriche delle piante e le convertiamo in suoni e melodie che cambiano in tempo reale, offrendo un'esperienza unica di connessione con la natura.",
+      "en": "Greensound was born from the idea of creating a bridge between the natural and technological worlds, transforming the electrical energy of plants into music. Through advanced sensors, we capture the electrical variations of plants and convert them into sounds and melodies that change in real time, offering a unique experience of connection with nature."
+    },
+    "tech": [
+      "Arduino"
+    ],
+    "url": "https://greensoundproject.com/",
+    "status": "active",
+    "order": 10,
+    "image": "assets/projects/greensound-project.png"
+  }
+]
