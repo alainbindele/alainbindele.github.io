@@ -5,8 +5,8 @@
     "title": "FIRE Calculator",
     "category": "projects",
     "description": {
-      "it": "Vuoi sapere quanti anni di lavoro ti separano dalla libertà finanziaria? FIRE Calculator fa i conti per te. Inserisci risparmi, investimenti e spese, e scopri quando potrai dire addio allo stress da stipendio e vivere di rendita. Un calcolatore semplice ma potente, pensato per chi vuole pianificare il proprio percorso verso il FIRE (Financial Independence, Retire Early) senza perdersi nei dettagli tecnici.",
-      "en": "Want to know how many working years separate you from financial freedom? FIRE Calculator does the math for you. Enter your savings, investments and expenses, and find out when you can say goodbye to paycheck stress and live off your assets. A simple yet powerful calculator, built for anyone who wants to plan their path to FIRE (Financial Independence, Retire Early) without getting lost in technical details."
+      "it": "Vuoi sapere quanti anni di lavoro ti separano dalla libertà finanziaria? FIRE Calculator fa i conti per te. Inserisci risparmi, investimenti e spese e scopri quando potrai dire addio allo stress da stipendio e vivere di rendita. Un calcolatore semplice ma potente, pensato per chi vuole pianificare il proprio percorso verso il FIRE (Financial Independence, Retire Early). Grafici chiari e nessun tecnicismo: solo la risposta che cerchi, sempre a portata di mano.",
+      "en": "Want to know how many working years separate you from financial freedom? FIRE Calculator does the math for you. Enter your savings, investments and expenses and find out when you can say goodbye to paycheck stress and live off your assets. A simple yet powerful calculator, built for anyone planning their path to FIRE (Financial Independence, Retire Early). Clear charts and no jargon: just the answer you're looking for, always within reach."
     },
     "tech": [
       "TypeScript",
@@ -23,8 +23,8 @@
     "title": "PortfolioBalancer",
     "category": "projects",
     "description": {
-      "it": "PortfolioBalancer è lo strumento gratuito e privato che ti aiuta a mantenere il tuo portafoglio di investimenti sempre in equilibrio. Inserisci i tuoi asset, e in pochi secondi scopri se sei troppo esposto su un settore o se stai seguendo la rotta giusta verso i tuoi obiettivi. Niente raccolta dati, niente complicazioni: solo chiarezza, controllo e decisioni più intelligenti per il tuo futuro finanziario.",
-      "en": "PortfolioBalancer is the free, private tool that helps you keep your investment portfolio always in balance. Enter your assets and in seconds find out whether you're overexposed to a sector or on the right track toward your goals. No data collection, no complications: just clarity, control and smarter decisions for your financial future."
+      "it": "PortfolioBalancer è lo strumento gratuito e privato che ti aiuta a mantenere il tuo portafoglio di investimenti sempre in equilibrio. Inserisci i tuoi asset e in pochi secondi scopri se sei troppo esposto su un settore o se stai seguendo la rotta giusta. Niente raccolta dati e niente complicazioni: solo chiarezza, controllo e decisioni più intelligenti per il tuo futuro finanziario. Un alleato semplice per investire con metodo, senza piattaforme invasive.",
+      "en": "PortfolioBalancer is the free, private tool that helps you keep your investment portfolio always in balance. Enter your assets and in seconds find out whether you're overexposed to a sector or on the right track. No data collection and no complications: just clarity, control and smarter decisions for your financial future. A simple ally to invest methodically, without invasive platforms."
     },
     "tech": [
       "TypeScript"
@@ -40,8 +40,8 @@
     "title": "Devt00ls",
     "category": "projects",
     "description": {
-      "it": "Devt00ls.com è una raccolta di strumenti per sviluppatori moderna e intuitiva, progettata per semplificare le attività quotidiane di programmazione. Include converter tra formati (JSON, YAML, CSV), generatori di POJO, UUID e cron expression, decodificatori JWT, tester per regex e molto altro. Tutti i tool sono rapidi, accessibili via web e pensati per migliorare la produttività degli sviluppatori.",
-      "en": "Devt00ls.com is a modern, intuitive collection of developer tools designed to simplify everyday programming tasks. It includes format converters (JSON, YAML, CSV), POJO, UUID and cron expression generators, JWT decoders, regex testers and much more. All tools are fast, accessible from the web and built to boost developer productivity."
+      "it": "Devt00ls.com è una raccolta di strumenti per sviluppatori moderna e intuitiva, che semplifica le attività quotidiane di programmazione. Include converter tra formati (JSON, YAML, CSV), generatori di POJO, UUID e cron, decodificatori JWT, tester per regex e altro. Tutti i tool sono rapidi e accessibili via web, pensati per la produttività degli sviluppatori. Un'unica cassetta degli attrezzi a portata di browser, per concentrarti sul codice.",
+      "en": "Devt00ls.com is a modern, intuitive collection of developer tools that simplifies everyday programming tasks. It includes format converters (JSON, YAML, CSV), POJO, UUID and cron generators, JWT decoders, regex testers and more. All tools are fast and accessible from the web, built for developer productivity. A single toolbox a browser tab away, so you can focus on the code."
     },
     "tech": [
       "AI"
@@ -57,8 +57,8 @@
     "title": "Piante Grasse",
     "category": "projects",
     "description": {
-      "it": "Piante-grasse.com è il tuo archivio intelligente di succulente: un catalogo con schede botaniche, foto HD e filtri avanzati. L'IA risponde in linguaggio naturale, suggerisce coltivazione, esposizione, substrato, irrigazione e propagazione, riconosce parassiti e patologie, propone rimedi, confronta specie e genera piani stagionali personalizzati. Scopri tassonomia, provenienza e rusticità, crea liste di preferiti e ricevi alert utili per mantenere le tue piante sane, belle e longeve.",
-      "en": "Piante-grasse.com is your smart succulent archive: a catalog with botanical sheets, HD photos and advanced filters. The AI answers in natural language, advises on cultivation, exposure, substrate, watering and propagation, recognizes pests and diseases, suggests remedies, compares species and generates personalized seasonal plans. Discover taxonomy, origin and hardiness, build favorites lists and get useful alerts to keep your plants healthy, beautiful and long-lived."
+      "it": "Piante-grasse.com è il tuo archivio intelligente di succulente: un catalogo con schede botaniche, foto in HD e filtri avanzati. L'IA risponde in linguaggio naturale e suggerisce coltivazione, esposizione, substrato, irrigazione e propagazione. Riconosce parassiti e patologie, propone rimedi, confronta specie e genera piani stagionali personalizzati. Scopri tassonomia, provenienza e rusticità, crea liste di preferiti e ricevi alert utili per piante sane, belle e longeve.",
+      "en": "Piante-grasse.com is your smart succulent archive: a catalog with botanical sheets, HD photos and advanced filters. The AI answers in natural language and advises on cultivation, exposure, substrate, watering and propagation. It recognizes pests and diseases, suggests remedies, compares species and generates personalized seasonal plans. Discover taxonomy, origin and hardiness, build favorites lists and get useful alerts for healthy, beautiful, long-lived plants."
     },
     "tech": [
       "AI"
@@ -74,8 +74,8 @@
     "title": "Notificamy",
     "category": "projects",
     "description": {
-      "it": "Notificamy è l'assistente intelligente che trasforma i tuoi promemoria in azioni concrete. Basta scrivere in linguaggio naturale cosa vuoi ricordare, e Notificamy penserà al resto: email, Slack, WhatsApp o altri canali, sempre al momento giusto. Niente più scadenze dimenticate, niente più confusione tra mille app diverse: un solo posto, un solo comando, notifiche ovunque ti servano.",
-      "en": "Notificamy is the smart assistant that turns your reminders into concrete actions. Just write in natural language what you want to remember, and Notificamy takes care of the rest: email, Slack, WhatsApp or other channels, always at the right time. No more missed deadlines, no more confusion across a dozen different apps: one place, one command, notifications wherever you need them."
+      "it": "Notificamy è l'assistente intelligente che trasforma i tuoi promemoria in azioni concrete. Basta scrivere in linguaggio naturale cosa vuoi ricordare e Notificamy pensa al resto: email, Slack, WhatsApp o altri canali, sempre al momento giusto. Niente più scadenze dimenticate né confusione tra mille app diverse: un solo posto e un solo comando. Notifiche ovunque ti servano, per liberare la mente e non perdere mai ciò che conta.",
+      "en": "Notificamy is the smart assistant that turns your reminders into concrete actions. Just write in natural language what you want to remember and Notificamy takes care of the rest: email, Slack, WhatsApp or other channels, always at the right time. No more missed deadlines or confusion across a dozen apps: one place and one command. Notifications wherever you need them, to free your mind and never miss what matters."
     },
     "tech": [
       "Spring Boot",
@@ -88,13 +88,32 @@
     "image": "assets/projects/notificamy.jpg"
   },
   {
+    "id": "syncdaemon",
+    "emoji": "🔄",
+    "title": "Atlas",
+    "category": "projects",
+    "description": {
+      "it": "Atlas è un sync daemon self-hosted per Windows che mantiene le tue cartelle locali in perfetto sincronismo con il tuo VPS. Il trasferimento è cifrato end-to-end, veloce e completamente privato: nessun cloud di terze parti, solo il tuo server e le tue regole. Gira silenzioso nella system tray e sincronizza in tempo reale ogni modifica ai file. Pensato per power user che vogliono il pieno controllo della propria infrastruttura senza rinunciare alla comodità.",
+      "en": "Atlas is a self-hosted sync daemon for Windows that keeps your local folders in perfect sync with your VPS. Transfers are end-to-end encrypted, fast and completely private: no third-party cloud, just your own server and your rules. It runs quietly in the system tray and syncs every file change in real time. Built for power users who want full control of their infrastructure without giving up convenience."
+    },
+    "tech": [
+      "Windows",
+      "Self-hosted",
+      "Encryption"
+    ],
+    "url": "syncdaemon.html",
+    "status": "active",
+    "order": 5.5,
+    "image": "assets/projects/syncdaemon.png"
+  },
+  {
     "id": "the-art-of-jaxs",
     "emoji": "🎨",
     "title": "The Art Of Jaxs",
     "category": "websites",
     "description": {
-      "it": "JAXS è un artista romano che esplora la pittura come strumento per indagare gli strati invisibili della realtà. La sua ricerca parte dalle radici africane e si traduce in un linguaggio visivo che fonde tradizione e contemporaneità, dando forma agli stati emotivi della mente umana. Le sue opere incarnano una ripetizione nella variazione, un'anatomia della coscienza che dialoga con l'afrofuturismo, cifra distintiva della sua visione artistica.",
-      "en": "JAXS is a Roman artist who explores painting as a tool to investigate the invisible layers of reality. His research starts from African roots and translates into a visual language that blends tradition and contemporaneity, giving form to the emotional states of the human mind. His works embody a repetition within variation, an anatomy of consciousness that dialogues with afrofuturism, the hallmark of his artistic vision."
+      "it": "JAXS è un artista romano che esplora la pittura come strumento per indagare gli strati invisibili della realtà. La sua ricerca parte dalle radici africane e diventa un linguaggio visivo che fonde tradizione e contemporaneità, dando forma agli stati emotivi della mente. Le sue opere sono una ripetizione nella variazione, un'anatomia della coscienza che dialoga con l'afrofuturismo. Il sito raccoglie la sua produzione in un'esperienza immersiva.",
+      "en": "JAXS is a Roman artist who explores painting as a tool to investigate the invisible layers of reality. His research starts from African roots and becomes a visual language that blends tradition and contemporaneity, giving form to the states of the mind. His works are a repetition within variation, an anatomy of consciousness in dialogue with afrofuturism. The website gathers his output into an immersive experience."
     },
     "tech": [
       "WordPress"
@@ -110,8 +129,8 @@
     "title": "Luca Margarita",
     "category": "websites",
     "description": {
-      "it": "Luca Margarita è un DJ e producer che unisce tecnica, passione e ricerca musicale. Perfezionista sul palco, cura ogni dettaglio dei suoi set, spaziando dalla house alla minimal techno con un approccio sempre originale. Grazie alla formazione in musica elettronica ha creato un proprio studio di registrazione, dove sviluppa competenze avanzate di mixaggio e mastering. Negli ultimi anni ha ampliato la sua esperienza anche in ambito radiofonico, firmando la regia di programmi dedicati al mondo della musica.",
-      "en": "Luca Margarita is a DJ and producer who combines technique, passion and musical research. A perfectionist on stage, he cares for every detail of his sets, ranging from house to minimal techno with an always original approach. Thanks to his training in electronic music he built his own recording studio, where he develops advanced mixing and mastering skills. In recent years he has also expanded into radio, directing programs dedicated to the world of music."
+      "it": "Luca Margarita è un DJ e producer che unisce tecnica, passione e ricerca musicale. Perfezionista sul palco, cura ogni dettaglio dei suoi set, spaziando dalla house alla minimal techno con un approccio sempre originale. Grazie alla formazione in musica elettronica ha creato un proprio studio, dove sviluppa competenze avanzate di mixaggio e mastering. Negli ultimi anni ha ampliato la sua esperienza anche in ambito radiofonico.",
+      "en": "Luca Margarita is a DJ and producer who combines technique, passion and musical research. A perfectionist on stage, he cares for every detail of his sets, ranging from house to minimal techno with an always original approach. Thanks to his training in electronic music he built his own studio, where he develops advanced mixing and mastering skills. In recent years he has also expanded into radio."
     },
     "tech": [
       "WordPress"
@@ -127,8 +146,8 @@
     "title": "HipHop Cinefest",
     "category": "websites",
     "description": {
-      "it": "Hip Hop Cine Fest è un evento unico in Italia e tra i pochi al mondo dedicati al rapporto tra Hip Hop e cinema. Per due giorni Roma diventa il punto d'incontro di artisti, studiosi, appassionati ed esperti che vedono nell'Hip Hop non solo un linguaggio artistico, ma anche un potente strumento di narrazione e trasformazione sociale. Il festival affronta temi centrali come femminismo Hip Hop, genere e diversità, empowerment, educazione civica e artistica, fino alle nuove sperimentazioni cinematografiche.",
-      "en": "Hip Hop Cine Fest is a unique event in Italy and one of the few in the world dedicated to the relationship between Hip Hop and cinema. For two days Rome becomes the meeting point of artists, scholars, enthusiasts and experts who see in Hip Hop not only an artistic language, but also a powerful tool for storytelling and social transformation. The festival tackles central themes such as Hip Hop feminism, gender and diversity, empowerment, civic and artistic education, and new cinematic experimentation."
+      "it": "Hip Hop Cine Fest è un evento unico in Italia e tra i pochi al mondo dedicati al rapporto tra Hip Hop e cinema. Per due giorni Roma diventa il punto d'incontro di artisti, studiosi e appassionati che vedono nell'Hip Hop un potente strumento di narrazione e trasformazione sociale. Il festival affronta femminismo Hip Hop, genere e diversità, empowerment ed educazione, fino alle nuove sperimentazioni cinematografiche.",
+      "en": "Hip Hop Cine Fest is a unique event in Italy and one of the few in the world dedicated to the relationship between Hip Hop and cinema. For two days Rome becomes the meeting point of artists, scholars and enthusiasts who see in Hip Hop a powerful tool for storytelling and social transformation. The festival tackles Hip Hop feminism, gender and diversity, empowerment and education, up to new cinematic experimentation."
     },
     "tech": [
       "WordPress"
@@ -161,8 +180,8 @@
     "title": "Greensound Project",
     "category": "collaborations",
     "description": {
-      "it": "Greensound nasce dall'idea di creare un ponte tra il mondo naturale e quello tecnologico, trasformando l'energia elettrica delle piante in musica. Attraverso sensori avanzati, catturiamo le variazioni elettriche delle piante e le convertiamo in suoni e melodie che cambiano in tempo reale, offrendo un'esperienza unica di connessione con la natura.",
-      "en": "Greensound was born from the idea of creating a bridge between the natural and technological worlds, transforming the electrical energy of plants into music. Through advanced sensors, we capture the electrical variations of plants and convert them into sounds and melodies that change in real time, offering a unique experience of connection with nature."
+      "it": "Greensound nasce dall'idea di creare un ponte tra il mondo naturale e quello tecnologico, trasformando l'energia elettrica delle piante in musica. Attraverso sensori avanzati catturiamo le variazioni bioelettriche delle piante e le convertiamo in suoni e melodie che cambiano in tempo reale. Ogni pianta diventa così uno strumento vivo, capace di comporre paesaggi sonori sempre diversi. Un progetto che unisce arte, biologia e tecnologia in un'esperienza unica di connessione con la natura.",
+      "en": "Greensound was born from the idea of building a bridge between the natural and technological worlds, transforming the electrical energy of plants into music. Through advanced sensors we capture the bioelectrical variations of plants and convert them into sounds and melodies that change in real time. Each plant becomes a living instrument, able to compose ever-changing soundscapes. A project that unites art, biology and technology in a unique experience of connection with nature."
     },
     "tech": [
       "Arduino"
