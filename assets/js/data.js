@@ -158,6 +158,6 @@ const JOBS = [
 
 const MARQUEE = [
   'Java','Spring Boot','AWS','Lambda','SQS','PostgreSQL','MongoDB','Docker','Kubernetes',
-  'Clean Architecture','DDD','Hexagonal','Spring Batch','REST','Angular','TypeScript',
-  'Linux','CI/CD','Microservices','Event-Driven','Terraform','Redis'
+  'Clean Architecture','DDD','Hexagonal','Spring Batch','REST',
+  'Linux','CI/CD','Microservices','Event-Driven'
 ];
