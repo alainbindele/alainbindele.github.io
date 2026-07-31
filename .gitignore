@@ -1,0 +1,9 @@
+# tooling locale, non fa parte del sito
+.claude/
+magic-mcp-main/
+
+# OS / editor
+Thumbs.db
+.DS_Store
+*.log
+node_modules/
