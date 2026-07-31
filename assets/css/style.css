@@ -286,9 +286,31 @@ body::before{
 .tile--map{ grid-row:span 2; display:flex; flex-direction:column; }
 .radar{ position:relative; flex:1; min-height:130px; display:grid; place-items:center; margin:var(--sp-2) 0; }
 .radar i{ position:absolute; border:1px solid rgba(0,229,255,.24); border-radius:50%; width:40px; height:40px; animation:ping 3.2s var(--ease) infinite; }
-.radar i:nth-child(2){ animation-delay:1.06s } .radar i:nth-child(3){ animation-delay:2.12s }
-.radar b{ width:9px; height:9px; border-radius:50%; background:var(--accent); box-shadow:0 0 14px var(--accent); }
+.radar i:nth-of-type(2){ animation-delay:1.06s } .radar i:nth-of-type(3){ animation-delay:2.12s }
+.radar b{ width:9px; height:9px; border-radius:50%; background:var(--accent); box-shadow:0 0 14px var(--accent); z-index:1; }
 @keyframes ping{ 0%{transform:scale(.35); opacity:1} 100%{transform:scale(3.1); opacity:0} }
+
+/* mappa schematica di Roma sotto al radar */
+.radar__map{
+  position:absolute; inset:0; width:100%; height:100%;
+  pointer-events:none; opacity:.85;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 50%, #000 52%, transparent 95%);
+          mask-image:radial-gradient(ellipse at 50% 50%, #000 52%, transparent 95%);
+}
+.radar__map path,.radar__map ellipse{ fill:none; vector-effect:non-scaling-stroke; }
+.rmap__grid path{ stroke:rgba(255,255,255,.05); stroke-width:1; }
+.radar__map .rmap__sea{ fill:var(--accent); fill-opacity:.05; }
+.rmap__coast{ stroke:var(--accent); stroke-opacity:.3; stroke-width:1; }
+.rmap__lake ellipse{ fill:var(--accent); fill-opacity:.13; stroke:var(--accent); stroke-opacity:.28; stroke-width:.75; }
+.rmap__river{ stroke:var(--accent); stroke-opacity:.34; stroke-width:1; stroke-linecap:round; }
+.rmap__road path{ stroke:var(--accent-2); stroke-opacity:.2; stroke-width:.75; }
+.rmap__ring{ stroke:var(--accent-2); stroke-opacity:.42; stroke-width:1; }
+.rmap__walls{ stroke:var(--accent-3); stroke-opacity:.3; stroke-width:.75; }
+.rmap__label text{
+  fill:var(--dim); font-family:var(--font-m); font-size:7px;
+  letter-spacing:.08em; text-anchor:middle; opacity:.7;
+}
+@media (prefers-reduced-motion:reduce){ .radar i{ animation:none; opacity:.35; } }
 .langs{ list-style:none; padding:0; margin:0; display:grid; gap:12px; font-size:11.5px; }
 .langs li{ display:grid; grid-template-columns:26px 1fr auto; align-items:center; gap:10px; }
 .langs li span{ color:var(--accent); }

@@ -174,7 +174,41 @@
     <article class="tile tile--map tilt">
       <div class="tile__glare"></div>
       <h3 class="mono tile__k">~/location</h3>
-      <div class="radar"><i></i><i></i><i></i><b></b></div>
+      <div class="radar">
+        <!-- mappa schematica di Roma e dintorni (Tirreno, Tevere, GRA, laghi) -->
+        <svg class="radar__map" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <g class="rmap__grid">
+            <path d="M40 0V180M80 0V180M120 0V180M160 0V180M200 0V180" />
+            <path d="M0 30H240M0 60H240M0 90H240M0 120H240M0 150H240" />
+          </g>
+
+          <path class="rmap__sea" d="M28 -5C40 30 44 52 50 74c6 22 12 44 24 66 8 16 14 28 18 45H-5V-5Z" />
+          <path class="rmap__coast" d="M28 -5C40 30 44 52 50 74c6 22 12 44 24 66 8 16 14 28 18 45" />
+
+          <g class="rmap__lake">
+            <ellipse cx="72" cy="26" rx="10" ry="8" />
+            <ellipse cx="152" cy="142" rx="4.6" ry="3.4" />
+            <ellipse cx="161" cy="149" rx="2.6" ry="2" />
+          </g>
+
+          <g class="rmap__road">
+            <path d="M120 90 66 12M120 90 128 -5M120 90 205 8M120 90 240 62M120 90 240 112M120 90 190 172M120 90 122 182M120 90 72 148M120 90 44 82" />
+          </g>
+          <ellipse class="rmap__ring" cx="120" cy="90" rx="29" ry="26" />
+          <ellipse class="rmap__walls" cx="120" cy="90" rx="11" ry="9" />
+
+          <path class="rmap__river" d="M150 -5c-4 23-16 39-20 57-4 16-6 26-10 38-4 12-8 18-14 26-10 12-22 22-32 32" />
+          <path class="rmap__river" d="M208 34c-18 10-40 24-56 34-10 6-20 10-26 12" />
+
+          <g class="rmap__label">
+            <text x="46" y="116" transform="rotate(-72 46 116)">TIRRENO</text>
+            <text x="74" y="46">BRACCIANO</text>
+            <text x="153" y="154">ALBANI</text>
+            <text x="152" y="106">ROMA</text>
+          </g>
+        </svg>
+        <i></i><i></i><i></i><b></b>
+      </div>
       <p class="mono tile__sm">Roma, IT — <span id="clock2">--:--</span> CET</p>
     </article>
 
