@@ -316,6 +316,41 @@ function tilt() {
 }
 
 /* ═══════════════ 9. GAUGES ═══════════════ */
+// Ticker under each gauge: one technology per line, TICKER_ROWS lines visible, moving
+// up one line at a time. The first TICKER_ROWS items are repeated at the end so the
+// loop can snap back to the top without a visible jump.
+const TICKER_ROWS = 2;
+const tickerItems = list => [...list, ...list.slice(0, TICKER_ROWS)]
+  .map((x, i) => `<li${i >= list.length ? ' class="dup"' : ''}>${x}</li>`).join('');
+
+function tickers() {
+  $$('.ticker').forEach((tk, gi) => {
+    const track = tk.querySelector('.ticker__track');
+    const n = track.querySelectorAll('li:not(.dup)').length;
+    if (REDUCED || n <= TICKER_ROWS) { tk.classList.add('is-static'); return; }
+
+    let i = 0, visible = false;
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(tk);
+    const line = () => track.firstElementChild.offsetHeight;
+
+    const step = () => {
+      if (!visible || document.hidden) return;
+      i++;
+      track.style.transition = 'transform .6s cubic-bezier(.22,1,.36,1)';
+      track.style.transform = `translateY(${-i * line()}px)`;
+      if (i === n) {                              // now showing the duplicated head: snap back
+        setTimeout(() => {
+          track.style.transition = 'none';
+          track.style.transform = 'translateY(0)';
+          i = 0;
+        }, 650);
+      }
+    };
+    // stagger the gauges so they do not all tick at once
+    setTimeout(() => setInterval(step, 2200), 400 + gi * 260);
+  });
+}
+
 function gauges() {
   const wrap = $('#gauges');
   wrap.insertAdjacentHTML('beforebegin',
@@ -332,8 +367,12 @@ function gauges() {
       </svg>
       <span class="gauge__num mono" data-to="${s.lvl}">0</span>
       <p class="gauge__name">${s.name}</p>
-      <span class="gauge__meta">${LANG === 'en' && s.metaEn ? s.metaEn : s.meta}</span>
+      <div class="gauge__meta ticker" aria-hidden="true">
+        <ul class="ticker__track">${tickerItems(s.stack)}</ul>
+      </div>
+      <span class="sr-only">${s.stack.join(', ')}</span>
     </article>`).join('');
+  tickers();
 
   const C = 2 * Math.PI * 52;
   $$('.gauge', wrap).forEach((g, i) => {

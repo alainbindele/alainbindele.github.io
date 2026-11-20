@@ -76,15 +76,20 @@ const SHOTS = {
   'greensound':         { src:'assets/projects/greensound-project.png', w:1482, h:1087 }
 };
 
+/* Stack gauges. `stack` feeds the small vertical ticker under each gauge
+   (one technology per line, two lines visible). Only hands-on technologies here:
+   things only studied or designed stay out. */
 const SKILLS = [
-  { name:'Java & Spring Boot', lvl:95, meta:'20+ anni', metaEn:'20+ years' },
-  { name:'System Architecture',   lvl:92, meta:'Clean Arch · DDD' },
-  { name:'Microservices',         lvl:90, meta:'Hexagonal · REST' },
-  { name:'Data Engineering',      lvl:88, meta:'Postgres · Flyway · data mart' },
-  { name:'AWS Cloud',             lvl:85, meta:'ECS · Lambda · EventBridge' },
-  { name:'AI · LLM & RAG',     lvl:82, meta:'Azure OpenAI · pgvector · MCP' },
-  { name:'Database Design',       lvl:88, meta:'SQL · NoSQL' },
-  { name:'DevOps & CI/CD',     lvl:80, meta:'Linux · Docker' }
+  { name:'Java & Spring Boot',  lvl:95, stack:['Spring Boot','Spring Batch','Quarkus','REST API','JUnit','JGit'] },
+  { name:'System Architecture', lvl:92, stack:['Clean Architecture','DDD','Hexagonal','Ports &amp; Adapters','Event-Driven','Design doc'] },
+  { name:'Microservices',       lvl:90, stack:['REST','Event-Driven','SQS · SNS','API Gateway','EventBridge','Docker'] },
+  { name:'Data Engineering',    lvl:88, stack:['PostgreSQL','Flyway','Materialized views','Data mart','AWS DMS · CDC','Advisory locks','Looker Studio'] },
+  { name:'AWS Cloud',           lvl:85, stack:['ECS · Fargate','Lambda','EventBridge','API Gateway','SQS · SNS','RDS · Aurora','DynamoDB','S3','IAM · KMS','CloudWatch'] },
+  { name:'AI · LLM & RAG',      lvl:82, stack:['Azure OpenAI','RAG','pgvector','MCP','Hybrid search','Embeddings','Claude Code'] },
+  { name:'Database Design',     lvl:88, stack:['PostgreSQL','MySQL','Aurora','DynamoDB','MongoDB','pgvector'] },
+  { name:'DevOps & CI/CD',      lvl:80, stack:['Docker','docker-compose','GitHub Actions','Terraform','Azure · Bicep','Git · LFS · worktree','Sentry','PagerDuty'] },
+  { name:'Linux & Networking',  lvl:85, stack:['Debian · Ubuntu','RHEL','systemd · cron','ufw · firewalld','Nginx','Cloudflare Tunnel','rclone'] },
+  { name:'Security & Identity', lvl:80, stack:['OAuth 2.0','JWT','Auth0','IAM · KMS','Security groups','GDPR · DPA'] }
 ];
 
 const JOBS = [
@@ -94,6 +99,7 @@ const JOBS = [
         'Server MCP (Model Context Protocol) in Spring Boot che apre il data mart aziendale agli assistenti AI in sola lettura, con trasporto Streamable HTTP e autorizzazione OAuth 2 a scope dedicati',
         'Data mart su PostgreSQL con pipeline a tre livelli (eventi → ultimo stato noto → viste aggregate), alimentato da sorgenti eterogenee: MySQL, Postgres, Freshdesk, Pipedrive e API di booking',
         'Viste materializzate versionate con migrazioni Flyway ripetibili, refresh concorrente in ordine di dipendenza e job coordinati con advisory lock',
+        'Migrazione live di un database di produzione con AWS DMS e CDC, testata end-to-end su 30 milioni di righe (binlog in formato ROW, grant su RDS, vincoli di chiave esterna)',
         'Architettura per la ricerca semantica su PostgreSQL: pgvector e full-text nello stesso database per query ibride, con l’indice vettoriale come dato derivato e sempre ricostruibile',
         'Orchestrazione su AWS: EventBridge → ECS RunTask, trigger HTTP da API Gateway, Lambda, SQS e alerting su CloudWatch; compressione di ~19 milioni di righe storiche',
         'Backend Java (Spring Boot, Quarkus, Spring Batch) su architettura modulare REST e DDD; refactoring dei batch legacy verso Clean Architecture ed esagonale (Ports &amp; Adapters)',
@@ -104,6 +110,7 @@ const JOBS = [
         'MCP (Model Context Protocol) server in Spring Boot giving AI assistants read-only access to the company data mart, over Streamable HTTP with OAuth 2 and dedicated scopes',
         'PostgreSQL data mart with a three-layer pipeline (events → latest known state → aggregated views), fed by heterogeneous sources: MySQL, Postgres, Freshdesk, Pipedrive and booking APIs',
         'Versioned materialized views via Flyway repeatable migrations, concurrent refresh in dependency order and jobs coordinated with advisory locks',
+        'Live migration of a production database with AWS DMS and CDC, tested end-to-end on 30 million rows (ROW binlog format, RDS grants, foreign-key constraints)',
         'Semantic search architecture on PostgreSQL: pgvector and full-text in the same database for hybrid queries, with the vector index as derived, always rebuildable data',
         'AWS orchestration: EventBridge → ECS RunTask, HTTP triggers from API Gateway, Lambda, SQS and CloudWatch alerting; compression of ~19 million historical rows',
         'Java backend (Spring Boot, Quarkus, Spring Batch) on a modular REST and DDD architecture; legacy batch jobs refactored towards Clean Architecture and hexagonal design (Ports &amp; Adapters)',
@@ -135,13 +142,13 @@ const JOBS = [
         'Matchin Srl: consulente, sviluppatore web e sistemista per il backend',
         'B-Wave Srl: sviluppatore web Ruby on Rails',
         'D2P Solutions: docente di linguaggi di programmazione in corsi aziendali (Node.js, Linux)',
-        'Gameotic: startup, seed round — responsabile sicurezza informatica, sysadmin Linux CentOS e sviluppatore (PHP, jQuery, Node.js, Bash)',
+        'Gameotic: startup, seed round — responsabile sicurezza informatica, sysadmin Linux CentOS e sviluppatore (PHP, jQuery, Node.js, Bash); streaming video a bassa latenza (~0,2 s) con ffmpeg e Red5 verso macchine telecomandate reali',
         'Docenze in campo informatico per associazioni e privati'],
     en:['Consulman Spa: software engineer and sysadmin on Linux (Fedora, Debian, RedHat) and Windows Server, security lead and PHP developer',
         'Matchin Srl: consultant, web developer and backend sysadmin',
         'B-Wave Srl: Ruby on Rails web developer',
         'D2P Solutions: programming languages instructor for corporate training (Node.js, Linux)',
-        'Gameotic: startup, seed round — information security lead, Linux CentOS sysadmin and developer (PHP, jQuery, Node.js, Bash)',
+        'Gameotic: startup, seed round — information security lead, Linux CentOS sysadmin and developer (PHP, jQuery, Node.js, Bash); low-latency video streaming (~0.2 s) with ffmpeg and Red5 to real remote-controlled machines',
         'IT teaching for associations and private clients'] },
 
   { when:'2015', whenEn:'2015', role:'Consulente e CTO', roleEn:'Consultant & CTO',
@@ -171,6 +178,7 @@ const JOBS = [
 
 const MARQUEE = [
   'Java','Spring Boot','AWS','LLM','RAG','MCP','PostgreSQL','pgvector','Azure OpenAI',
-  'Clean Architecture','DDD','Hexagonal','Data Mart','Flyway','EventBridge','ECS','Lambda','SQS',
-  'Spring Batch','Quarkus','REST','Event-Driven','Docker','Kubernetes','Linux','CI/CD','Claude Code'
+  'Clean Architecture','DDD','Hexagonal','Data Mart','Flyway','AWS DMS','EventBridge','ECS · Fargate','Lambda',
+  'SQS','SNS','DynamoDB','Aurora','Terraform','GitHub Actions','Docker','Kubernetes','Nginx',
+  'OAuth 2.0','Auth0','Spring Batch','Quarkus','REST','Event-Driven','Linux','Sentry','Claude Code'
 ];

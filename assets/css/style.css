@@ -332,7 +332,7 @@ body::before{
 .tile__edu-main{ font-size:17px; font-weight:600; margin:0; }
 
 /* ═══════════════ GAUGES ═══════════════ */
-.gauges{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; }
+.gauges{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; }  /* 10 gauges → 5 + 5 on desktop */
 .gauge{
   position:relative; padding:var(--sp-3); text-align:center;
   background:var(--surface); border:1px solid var(--border); border-radius:var(--r-3);
@@ -347,6 +347,21 @@ body::before{
   font-family:var(--font-m); font-size:22px; color:var(--fg); }
 .gauge__name{ font-size:14px; font-weight:600; margin:0 0 3px; }
 .gauge__meta{ font-family:var(--font-m); font-size:10.5px; color:var(--dim); }
+
+/* Vertical ticker of technologies under each gauge (two lines visible) */
+.ticker{
+  --row:17px;
+  height:calc(var(--row) * 2); overflow:hidden; position:relative;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22%,#000 78%,transparent 100%);
+          mask-image:linear-gradient(to bottom,transparent 0,#000 22%,#000 78%,transparent 100%);
+}
+.ticker__track{ list-style:none; margin:0; padding:0; will-change:transform; }
+.ticker__track li{ height:var(--row); line-height:var(--row); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+/* Static fallback (reduced motion / short lists): the whole list, wrapped, no mask */
+.ticker.is-static{ height:auto; -webkit-mask-image:none; mask-image:none; }
+.ticker.is-static .ticker__track li{ display:inline; height:auto; }
+.ticker.is-static .ticker__track li.dup{ display:none; }
+.ticker.is-static .ticker__track li:not(:first-child)::before{ content:' · '; }
 
 /* ═══════════════ WORK (pinned horizontal) ═══════════════ */
 .work{ position:relative; }
