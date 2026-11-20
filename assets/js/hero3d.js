@@ -345,4 +345,12 @@ function animate() {
   }
 }
 
-init();
+// Defer the WebGL setup until after the first paint so the hero text (LCP) is never
+// blocked by shader compilation or point generation; use idle time when available.
+function afterFirstPaint(fn) {
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 800 });
+    else setTimeout(fn, 0);
+  }));
+}
+afterFirstPaint(init);

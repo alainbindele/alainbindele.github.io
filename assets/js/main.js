@@ -8,11 +8,24 @@ const $  = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const DESKTOP = () => window.matchMedia('(min-width: 761px)').matches;
+let INTRO = false;                                 // true when the boot overlay just ran
 
-let LANG = (localStorage.getItem('ab-lang') || (navigator.language || 'it').slice(0, 2).toLowerCase());
-if (LANG !== 'en') LANG = 'it';
+// Language is fixed per page: / is Italian, /en/ is English (static, indexable copies).
+const LANG = document.documentElement.lang === 'en' ? 'en' : 'it';
+// Path prefix to the site root for JS-built URLs ('' on /, '../' on /en/).
+const ROOT = document.documentElement.dataset.root || '';
 
 const t = k => (I18N[LANG] && I18N[LANG][k]) || (I18N.it[k] ?? k);
+
+// If the GSAP CDN is unreachable, bail out cleanly: the static content is already
+// visible, we only have to make sure the boot overlay does not cover it.
+if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+  document.documentElement.classList.remove('is-booting');
+  const b = document.getElementById('boot');
+  if (b) b.remove();
+  console.warn('[main] GSAP not available: running without animations.');
+  return;
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -34,12 +47,42 @@ const BOOT_LINES = [
   ['ready',                  'ok']
 ];
 
+// The overlay is shown only on the first visit of the session (decided by the inline
+// script in <head>, which also honours prefers-reduced-motion). It lasts ~1s and any
+// click or key press skips it. The page content is in the DOM underneath from the start.
 function boot() {
-  const el = $('#boot'), log = $('#bootLog'), bar = $('#bootBar'), pct = $('#bootPct');
-  if (REDUCED) { el.remove(); document.body.classList.remove('is-locked'); start(); return; }
+  const el = $('#boot');
+  const booting = document.documentElement.classList.contains('is-booting');
+  if (!booting || !el) {
+    if (el) el.remove();
+    document.documentElement.classList.remove('is-booting');
+    start(false);
+    return;
+  }
 
+  try { sessionStorage.setItem('ab-booted', '1'); } catch (_) {}
   document.body.classList.add('is-locked');
-  let i = 0;
+
+  const log = $('#bootLog'), bar = $('#bootBar'), pct = $('#bootPct');
+  let i = 0, timer = 0, done = false;
+
+  const finish = fast => {
+    if (done) return;
+    done = true;
+    clearTimeout(timer);
+    removeEventListener('pointerdown', skip, true);
+    removeEventListener('keydown', skip, true);
+    document.body.classList.remove('is-locked');
+    start(true);                                   // hero intro plays while the overlay fades
+    gsap.to(el, {
+      opacity: 0, duration: fast ? .2 : .32, ease: 'power2.inOut',
+      onComplete: () => { el.remove(); document.documentElement.classList.remove('is-booting'); }
+    });
+  };
+  const skip = () => finish(true);
+  addEventListener('pointerdown', skip, true);
+  addEventListener('keydown', skip, true);
+
   const step = () => {
     if (i < BOOT_LINES.length) {
       const [label, st] = BOOT_LINES[i];
@@ -50,17 +93,12 @@ function boot() {
       const p = Math.round((i / BOOT_LINES.length) * 100);
       bar.style.width = p + '%';
       pct.textContent = p;
-      setTimeout(step, 48 + Math.random() * 72);
+      timer = setTimeout(step, 50);                // 10 lines ≈ 0.5s
     } else {
-      setTimeout(() => {
-        gsap.to(el, {
-          opacity: 0, duration: .6, ease: 'power2.inOut',
-          onComplete: () => { el.remove(); document.body.classList.remove('is-locked'); start(); }
-        });
-      }, 190);
+      timer = setTimeout(() => finish(false), 90);
     }
   };
-  setTimeout(step, 140);
+  timer = setTimeout(step, 60);
 }
 
 /* ═══════════════ 2. SMOOTH SCROLL ═══════════════ */
@@ -241,8 +279,9 @@ function counters() {
     });
   });
 
+  // Above the fold: the HTML already says 20; count up only behind the boot intro.
   const yc = $('#yearsCount'), o = { v: 0 };
-  if (REDUCED) { yc.textContent = 20; }
+  if (REDUCED || !INTRO) { yc.textContent = 20; }
   else gsap.to(o, { v: 20, duration: 2.2, delay: .6, ease: 'power2.out',
     onUpdate: () => { yc.textContent = Math.round(o.v); } });
 }
@@ -319,18 +358,25 @@ function gauges() {
 
 /* ═══════════════ 10. WORK RAIL ═══════════════ */
 let railTween = null;
+const ext = p => p.url.startsWith('http');
+// Screenshot with intrinsic size (prevents layout shift) and a descriptive alt.
+const shot = p => {
+  const s = SHOTS[p.id];
+  if (!s) return '';
+  return `<figure class="card__shot"><img src="${ROOT}${s.src}" alt="${t('work.shot')} ${p.title}" width="${s.w}" height="${s.h}" loading="lazy" decoding="async"></figure>`;
+};
 function renderWork() {
   const rail = $('#workRail');
   rail.innerHTML = PROJECTS.map((p, i) => `
     <article class="card" data-cat="${p.cat}">
-      ${SHOTS[p.id] ? `<figure class="card__shot"><img src="${SHOTS[p.id]}" alt="${p.title}" loading="lazy" decoding="async"></figure>` : ''}
+      ${shot(p)}
       <span class="card__cat mono">${p.cat}</span>
       <span class="card__idx">${String(i + 1).padStart(2, '0')}</span>
       <h3 class="card__title">${p.title}</h3>
       <p class="card__desc">${LANG === 'en' ? p.en : p.it}</p>
       <div class="card__tech">${p.tech.map(x => `<span>${x}</span>`).join('')}</div>
-      <a class="card__go" href="${p.url}" ${p.url.startsWith('http') ? 'target="_blank" rel="noopener"' : ''}>
-        ${t('work.go')}
+      <a class="card__go" href="${ext(p) ? p.url : ROOT + p.url}" ${ext(p) ? 'target="_blank" rel="noopener"' : ''}>
+        ${t('work.go')}<span class="sr-only"> ${p.title}${ext(p) ? ' ' + t('work.newTab') : ''}</span>
         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg>
       </a>
     </article>`).join('');
@@ -424,7 +470,7 @@ function pathScroll() {
 const FS = {
   'about.md':  () => t('about.bio'),
   'stack.txt': () => SKILLS.map(s => `${s.name.padEnd(22)} ${'█'.repeat(Math.round(s.lvl / 7))} ${s.lvl}`).join('\n'),
-  'cv.pdf':    () => `<span class="dm">binary file — </span><a href="cv.pdf" download>scarica / download</a>`,
+  'cv.pdf':    () => `<span class="dm">binary file — </span><a href="${ROOT}downloads/CV_${LANG}.pdf" download>scarica / download</a>`,
   'paper.tex': () => 'T₀ ⊊ T₁ ⊊ T₂\n\n' + t('paper.abs')
 };
 
@@ -462,7 +508,8 @@ Software Engineer · Roma, IT
 
   contact: () => `email     <a href="mailto:alain.bindele@gmail.com">alain.bindele@gmail.com</a>
 github    <a href="https://github.com/alainbindele" target="_blank" rel="noopener">@alainbindele</a>
-linkedin  <a href="https://www.linkedin.com/in/alainbindele" target="_blank" rel="noopener">/in/alainbindele</a>`,
+linkedin  <a href="https://www.linkedin.com/in/alainbindele/" target="_blank" rel="noopener">/in/alainbindele</a>
+cv        <a href="${ROOT}downloads/CV_${LANG}.pdf" download>CV_${LANG}.pdf</a>`,
 
   neofetch: () => `<span class="ac">       _    ____</span>     <span class="hl">alain@bindele</span>
 <span class="ac">      / \\  | __ )</span>    <span class="dm">─────────────</span>
@@ -485,7 +532,11 @@ linkedin  <a href="https://www.linkedin.com/in/alainbindele" target="_blank" rel
    \`----'</span>
 <span class="dm">refill in corso…</span>`,
 
-  matrix: () => { matrixRain(6000); return '<span class="ok">wake up, Neo…</span>'; },
+  matrix: () => {
+    if (REDUCED) return '<span class="dm">matrix disabled: prefers-reduced-motion is on.</span>';
+    matrixRain(6000);
+    return '<span class="ok">wake up, Neo…</span>';
+  },
 
   sudo: a => a
     ? `<span class="er">alain non è nel file sudoers. Questo incidente sarà segnalato.</span>`
@@ -540,6 +591,7 @@ function term() {
 /* ═══════════════ 14. MATRIX RAIN + KONAMI ═══════════════ */
 let rainStop = null;
 function matrixRain(ms = 0) {
+  if (REDUCED) return;                             // no full-screen motion for reduced-motion users
   const cv = $('#matrix'), ctx = cv.getContext('2d');
   cv.width = innerWidth; cv.height = innerHeight;
   const cols = Math.floor(cv.width / 15);
@@ -598,33 +650,35 @@ function clocks() {
   }, 1000);
 }
 
-/* ═══════════════ 16. i18n ═══════════════ */
-function applyLang() {
-  document.documentElement.lang = LANG;
-  document.documentElement.dataset.lang = LANG;
-  $$('[data-i18n]').forEach(el => {
-    const v = t(el.dataset.i18n);
-    if (el.dataset.split) { el.textContent = v; delete el.dataset.splitDone; splitChars(el); }
-    else el.textContent = v;
+/* ═══════════════ 16. LANGUAGE LINK ═══════════════ */
+// The IT/EN switch is a plain link to the other static page; on click we append the
+// section currently in view so the reader lands in the same place.
+function langLink() {
+  const a = $('#langBtn');
+  if (!a) return;
+  a.addEventListener('click', () => {
+    // last nav section whose top is above the middle of the viewport (none while on the hero)
+    let hash = '';
+    $$('.nav__links a').forEach(l => {
+      const sec = $(l.getAttribute('href'));
+      if (sec && sec.getBoundingClientRect().top < innerHeight * .5) hash = l.getAttribute('href');
+    });
+    a.setAttribute('href', a.getAttribute('href').split('#')[0] + hash);
   });
-  $('.lang__it').classList.toggle('is-on', LANG === 'it');
-  $('.lang__en').classList.toggle('is-on', LANG === 'en');
-  localStorage.setItem('ab-lang', LANG);
 }
 
-function langToggle() {
-  $('#langBtn').addEventListener('click', () => {
-    LANG = LANG === 'it' ? 'en' : 'it';
-    applyLang();
-    renderWork();
-    renderPath();
-    ScrollTrigger.refresh();
-  });
+// Honour an incoming #hash (e.g. from the language link) once layout and pins exist.
+function jumpToHash() {
+  const id = location.hash && location.hash.slice(1);
+  const target = id && document.getElementById(id);
+  if (!target) return;
+  if (lenis) lenis.scrollTo(target, { offset: -60, immediate: true });
+  else target.scrollIntoView();
 }
 
 /* ═══════════════ BOOTSTRAP ═══════════════ */
-function start() {
-  applyLang();
+function start(intro) {
+  INTRO = !!intro;
   renderWork();
   renderPath();
 
@@ -643,9 +697,9 @@ function start() {
   term();
   konami();
   clocks();
-  langToggle();
+  langLink();
 
-  // reveal generico
+  // generic scroll reveals (below the fold, never hide above-the-fold content)
   if (!REDUCED) {
     $$('.tile, .gauge, .ccard, .paper').forEach(el => {
       gsap.from(el, {
@@ -653,6 +707,10 @@ function start() {
         scrollTrigger: { trigger: el, start: 'top 90%', once: true }
       });
     });
+  }
+  // Hero intro only right after the boot overlay: on repeat visits the H1, role and lead
+  // stay exactly as painted by the HTML (no hide-then-reveal, better LCP).
+  if (!REDUCED && intro) {
     // il titolo si anima intero: niente split, o si rompe il background-clip:text
     gsap.from('.hero__title', {
       yPercent: 18, opacity: 0, duration: 1.15, ease: 'power4.out', delay: .1
@@ -675,6 +733,7 @@ function start() {
   }, 6000);
 
   ScrollTrigger.refresh();
+  jumpToHash();
   console.log(
     '%c  _    ____\n / \\  | __ )   alain bindele\n/ _ \\ |  _ \\   software engineer\n\\___/ |____/   ciao, curioso.',
     'color:#00e5ff;font-family:monospace'

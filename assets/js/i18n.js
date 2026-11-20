@@ -1,5 +1,10 @@
 /* ═══════════════════════════════════════════════════════════
    i18n — IT / EN
+   Single source of truth for the copy of both pages.
+   index.html carries the Italian text; /en/index.html is generated from it by
+   `node scripts/build-en.mjs`, which swaps every [data-i18n] text node and every
+   [data-i18n-aria] / [data-i18n-alt] attribute with the English entry below.
+   After editing this file (or index.html) re-run the build.
    ═══════════════════════════════════════════════════════════ */
 
 const I18N = {
@@ -18,11 +23,14 @@ const I18N = {
     'about.k1':'anni di codice','about.k2':'ruoli dal 2005',
     'about.l1':'madrelingua','about.l2':'ottima tecnica','about.l3':'base',
     'about.edu':'Laurea Magistrale in Informatica',
+    // TODO(alain): role you are looking for, work mode, availability
+    'about.avail':'Disponibile per: [RUOLO CERCATO] · [remoto / ibrido su Roma] · [da quando]',
 
     'stack.title':'Stack','stack.sub':'// tecnologie di ogni giorno',
 
     'work.title':'Progetti','work.f0':'tutti','work.f1':'prodotti','work.f2':'siti','work.f3':'collab',
     'work.hint':'↔ scorri','work.go':'visita',
+    'work.newTab':'(si apre in una nuova scheda)','work.shot':'Screenshot di',
 
     'paper.title':'Ricerca','paper.sub':'// contributi indipendenti',
     'paper.h':'La Gerarchia Minima dell’Auto-Certificazione',
@@ -34,9 +42,18 @@ const I18N = {
     'term.title':'Console','term.sub':'// sì, funziona davvero. prova `help`',
 
     'contact.title':'Parliamone','contact.sub':'// aperto a collaborazioni, consulenze e buone idee',
-    'contact.cv':'scarica il pdf',
+    'contact.cvTitle':'Scarica il CV','contact.cv':'PDF · italiano',
+    'contact.cvAlt':'CV disponibile anche in','contact.cvAltLink':'inglese (PDF)',
 
-    'foot.made':'fatto a Roma, con troppa caffeina'
+    'foot.made':'fatto a Roma, con troppa caffeina',
+
+    'boot.skip':'clicca o premi un tasto per saltare',
+
+    // attribute-only strings (aria-label / alt)
+    'aria.sections':'Sezioni','aria.menu':'Menu',
+    'aria.scroll':'Scorri alla sezione Chi sono',
+    'aria.formula':'T zero strettamente incluso in T uno strettamente incluso in T due',
+    'alt.portrait':'Ritratto di Alain Bindele, software engineer a Roma'
   },
 
   en:{
@@ -54,11 +71,14 @@ const I18N = {
     'about.k1':'years of code','about.k2':'roles since 2005',
     'about.l1':'native','about.l2':'strong technical','about.l3':'basic',
     'about.edu':'MSc in Computer Science',
+    // TODO(alain): role you are looking for, work mode, availability
+    'about.avail':'Available for: [TARGET ROLE] · [remote / hybrid in Rome] · [from when]',
 
     'stack.title':'Stack','stack.sub':'// everyday technologies',
 
     'work.title':'Work','work.f0':'all','work.f1':'products','work.f2':'sites','work.f3':'collab',
     'work.hint':'↔ scroll','work.go':'visit',
+    'work.newTab':'(opens in a new tab)','work.shot':'Screenshot of',
 
     'paper.title':'Research','paper.sub':'// independent contributions',
     'paper.h':'The Minimal Hierarchy of Self-Certification',
@@ -70,8 +90,16 @@ const I18N = {
     'term.title':'Console','term.sub':'// yes, it actually works. try `help`',
 
     'contact.title':'Let’s talk','contact.sub':'// open to collaborations, consulting and good ideas',
-    'contact.cv':'download the pdf',
+    'contact.cvTitle':'Download my CV','contact.cv':'PDF · English',
+    'contact.cvAlt':'CV also available in','contact.cvAltLink':'Italian (PDF)',
 
-    'foot.made':'made in Rome, on too much caffeine'
+    'foot.made':'made in Rome, on too much caffeine',
+
+    'boot.skip':'click or press any key to skip',
+
+    'aria.sections':'Sections','aria.menu':'Menu',
+    'aria.scroll':'Scroll to the About section',
+    'aria.formula':'T zero strictly contained in T one strictly contained in T two',
+    'alt.portrait':'Portrait of Alain Bindele, software engineer based in Rome'
   }
 };

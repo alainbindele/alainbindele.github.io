@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Build sources and tooling, not part of the public site
+Disallow: /scripts/
+
+Sitemap: https://alainbindele.github.io/sitemap.xml

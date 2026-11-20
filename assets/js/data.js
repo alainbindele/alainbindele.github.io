@@ -60,19 +60,20 @@ const PROJECTS = [
     url:'https://greensoundproject.com/', tech:['Arduino'] }
 ];
 
-/* screenshot già presenti nel repo del sito */
+/* Project screenshots. Intrinsic width/height are emitted on the <img> to reserve
+   space and avoid layout shift (CLS). Paths are relative to the site root. */
 const SHOTS = {
-  'fire-calculator':    'assets/projects/fire-calculator.jpg',
-  'portfolio-balancer': 'assets/projects/portfolio-balancer.jpg',
-  'devt00ls':           'assets/projects/devt00ls.jpg',
-  'piante-grasse':      'assets/projects/piante-grasse.png',
-  'notificamy':         'assets/projects/notificamy.jpg',
-  'atlas':              'assets/projects/syncdaemon.png',
-  'the-art-of-jaxs':    'assets/projects/the-art-of-jaxs.jpg',
-  'luca-margarita':     'assets/projects/luca-margarita.jpg',
-  'hiphop-cinefest':    'assets/projects/hiphop-cinefest.jpg',
-  'baburka-production': 'assets/projects/baburka-production.jpg',
-  'greensound':         'assets/projects/greensound-project.png'
+  'fire-calculator':    { src:'assets/projects/fire-calculator.jpg',    w:1286, h:1141 },
+  'portfolio-balancer': { src:'assets/projects/portfolio-balancer.jpg', w:1413, h:1272 },
+  'devt00ls':           { src:'assets/projects/devt00ls.jpg',           w:1246, h:800  },
+  'piante-grasse':      { src:'assets/projects/piante-grasse.png',      w:817,  h:800  },
+  'notificamy':         { src:'assets/projects/notificamy.jpg',         w:1409, h:1261 },
+  'atlas':              { src:'assets/projects/syncdaemon.png',         w:912,  h:540  },
+  'the-art-of-jaxs':    { src:'assets/projects/the-art-of-jaxs.jpg',    w:1593, h:1087 },
+  'luca-margarita':     { src:'assets/projects/luca-margarita.jpg',     w:1553, h:1187 },
+  'hiphop-cinefest':    { src:'assets/projects/hiphop-cinefest.jpg',    w:1854, h:1068 },
+  'baburka-production': { src:'assets/projects/baburka-production.jpg', w:1660, h:1286 },
+  'greensound':         { src:'assets/projects/greensound-project.png', w:1482, h:1087 }
 };
 
 const SKILLS = [
