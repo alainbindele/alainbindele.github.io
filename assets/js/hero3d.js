@@ -162,6 +162,7 @@ void main(){
 
 const FRAG = /* glsl */`
 precision mediump float;
+uniform float uLight;          // 0 = dark theme (additive glow), 1 = light theme (ink on paper)
 varying float vRnd;
 varying float vDepth;
 
@@ -169,18 +170,18 @@ void main(){
   vec2 uv = gl_PointCoord - 0.5;
   float d = length(uv);
   if (d > 0.5) discard;
-  float alpha = smoothstep(0.5, 0.06, d);
+  float alpha = smoothstep(0.5, mix(0.06, 0.3, uLight), d);   // crisper dots on light backgrounds
 
-  vec3 cyan    = vec3(0.00, 0.90, 1.00);
-  vec3 violet  = vec3(0.49, 0.36, 1.00);
-  vec3 magenta = vec3(1.00, 0.18, 0.53);
+  vec3 cyan    = mix(vec3(0.00, 0.90, 1.00), vec3(0.00, 0.47, 0.63), uLight);
+  vec3 violet  = mix(vec3(0.49, 0.36, 1.00), vec3(0.35, 0.25, 0.88), uLight);
+  vec3 magenta = mix(vec3(1.00, 0.18, 0.53), vec3(0.84, 0.07, 0.42), uLight);
 
   vec3 col = mix(cyan, violet, clamp(vRnd, 0.0, 1.0));
   col = mix(col, magenta, smoothstep(5.0, 9.0, vDepth) * 0.65);
-  col += (1.0 - smoothstep(0.0, 0.34, d)) * 0.28;
+  col += (1.0 - smoothstep(0.0, 0.34, d)) * 0.28 * (1.0 - uLight);   // white core only when glowing
 
   // additive: alpha contenuta, altrimenti la nuvola satura in bianco
-  gl_FragColor = vec4(col, alpha * 0.72);
+  gl_FragColor = vec4(col, alpha * mix(0.72, 0.95, uLight));
 }`;
 
 async function init() {
@@ -243,9 +244,12 @@ async function init() {
       uPixelRatio: { value: Math.min(devicePixelRatio, 2) },
       uMouse:      { value: new THREE.Vector2(0, 0) },
       uTanFov:     { value: Math.tan(THREE.MathUtils.degToRad(48) / 2) },
-      uAspect:     { value: innerWidth / innerHeight }
+      uAspect:     { value: innerWidth / innerHeight },
+      uLight:      { value: 0 }
     }
   });
+  applyTheme(document.documentElement.dataset.theme);
+  addEventListener('themechange', e => applyTheme(e.detail));
 
   points = new THREE.Points(geo, mat);
   group.add(points);
@@ -257,6 +261,14 @@ async function init() {
   bind();
   if (!REDUCED) scheduleMorph();
   animate();
+}
+
+/* ── theme: additive glow on dark, normal blending (dark ink) on light ── */
+function applyTheme(theme) {
+  const light = theme === 'light';
+  mat.uniforms.uLight.value = light ? 1 : 0;
+  mat.blending = light ? THREE.NormalBlending : THREE.AdditiveBlending;
+  mat.needsUpdate = true;
 }
 
 /* ── morph loop ────────────────────────────────────────── */

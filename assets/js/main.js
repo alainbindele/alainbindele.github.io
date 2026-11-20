@@ -356,7 +356,7 @@ function gauges() {
   wrap.insertAdjacentHTML('beforebegin',
     `<svg width="0" height="0" aria-hidden="true"><defs>
        <linearGradient id="gg" x1="0" y1="0" x2="1" y2="1">
-         <stop offset="0%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#7c5cff"/>
+         <stop offset="0%" style="stop-color:var(--accent)"/><stop offset="100%" style="stop-color:var(--accent-2)"/>
        </linearGradient></defs></svg>`);
 
   wrap.innerHTML = SKILLS.map(s => `
@@ -632,9 +632,9 @@ function matrixRain(ms = 0) {
   gsap.to(cv, { opacity: 1, duration: .4 });
 
   const id = setInterval(() => {
-    ctx.fillStyle = 'rgba(5,6,10,.07)';
+    ctx.fillStyle = `rgba(${css('--bg-rgb')},.07)`;
     ctx.fillRect(0, 0, cv.width, cv.height);
-    ctx.fillStyle = '#00e5ff';
+    ctx.fillStyle = css('--accent');
     ctx.font = '14px JetBrains Mono, monospace';
     drops.forEach((y, i) => {
       ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * 15, y * 15);
@@ -682,7 +682,32 @@ function clocks() {
   }, 1000);
 }
 
-/* ═══════════════ 16. LANGUAGE LINK ═══════════════ */
+/* ═══════════════ 16. THEME SWITCH ═══════════════ */
+// The initial theme is set by the inline script in <head> (before first paint).
+// Here we only flip it, remember the choice and tell the WebGL hero.
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+function themeToggle() {
+  const btn = $('#themeBtn');
+  if (!btn) return;
+  const root = document.documentElement;
+  const sync = () => {
+    const light = root.dataset.theme === 'light';
+    btn.setAttribute('aria-label', t(light ? 'theme.toDark' : 'theme.toLight'));
+    btn.setAttribute('aria-pressed', String(light));
+    const meta = $('meta[name="theme-color"]');
+    if (meta) meta.content = light ? '#f4f5f9' : '#05060a';
+  };
+  btn.addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+    try { localStorage.setItem('ab-theme', root.dataset.theme); } catch (_) {}
+    sync();
+    dispatchEvent(new CustomEvent('themechange', { detail: root.dataset.theme }));
+  });
+  sync();
+}
+
+/* ═══════════════ 17. LANGUAGE LINK ═══════════════ */
 // The IT/EN switch is a plain link to the other static page; on click we append the
 // section currently in view so the reader lands in the same place.
 function langLink() {
@@ -754,6 +779,7 @@ function start(intro) {
   konami();
   clocks();
   langLink();
+  themeToggle();
 
   // generic scroll reveals (below the fold, never hide above-the-fold content)
   if (!REDUCED) {

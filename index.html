@@ -9,6 +9,12 @@
 <meta name="theme-color" content="#05060a" />
 <meta name="author" content="Alain Bindele" />
 
+<!-- Icons: initials "AB" (sources in assets/icons, rebuild with node scripts/build-icons.mjs) -->
+<link rel="icon" href="/favicon.ico" sizes="48x48" />
+<link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
 <!-- Canonical URL and language alternates (keep in sync with /en/index.html and sitemap.xml) -->
 <link rel="canonical" href="https://alainbindele.github.io/" />
 <link rel="alternate" hreflang="it" href="https://alainbindele.github.io/" />
@@ -70,6 +76,18 @@
 }
 </script>
 
+<!-- Theme before first paint (no flash): saved choice, otherwise dark, the site's signature look. -->
+<script>
+(function () {
+  var t = null;
+  try { t = localStorage.getItem('ab-theme'); } catch (e) {}
+  t = t === 'light' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = t;
+  var m = document.querySelector('meta[name="theme-color"]');
+  if (m) m.content = t === 'light' ? '#f4f5f9' : '#05060a';
+})();
+</script>
+
 <!-- First visit only: show the boot overlay before the body paints (no flash of content underneath).
      Skipped on repeat visits in the same session and with prefers-reduced-motion. -->
 <script>
@@ -123,6 +141,11 @@ try {
     <a href="#contact" data-i18n="nav.contact">contatti</a>
   </nav>
   <div class="nav__right">
+    <!-- Light/dark switch: the label is updated by main.js to describe the next action -->
+    <button class="theme-toggle" id="themeBtn" type="button" aria-label="Passa al tema chiaro" data-i18n-aria="theme.toLight">
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1Z"/></svg>
+    </button>
     <!-- Language switch: plain link between the two static pages (indexable, no JS needed) -->
     <a class="lang" id="langBtn" href="/en/" hreflang="en" lang="en" aria-label="English version of this page" data-lang-target="en">
       <span class="lang__it is-on">IT</span><span class="lang__sep">/</span><span class="lang__en">EN</span>

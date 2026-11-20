@@ -42,6 +42,7 @@ const I18N = {
     'foot.made':'fatto a Roma, con troppa caffeina',
 
     'boot.skip':'clicca o premi un tasto per saltare',
+    'theme.toLight':'Passa al tema chiaro','theme.toDark':'Passa al tema scuro',
 
     // attribute-only strings (aria-label / alt)
     'aria.sections':'Sezioni','aria.menu':'Menu',
@@ -83,6 +84,7 @@ const I18N = {
     'foot.made':'made in Rome, on too much caffeine',
 
     'boot.skip':'click or press any key to skip',
+    'theme.toLight':'Switch to light theme','theme.toDark':'Switch to dark theme',
 
     'aria.sections':'Sections','aria.menu':'Menu',
     'aria.scroll':'Scroll to the About section',
