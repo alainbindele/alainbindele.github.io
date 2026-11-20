@@ -278,14 +278,6 @@ body::before{
 .tile__sm.dim{ color:var(--dim); }
 .tile--wide{ grid-column:span 2; grid-row:span 2; }
 .tile--wide p{ color:var(--muted); margin:0 0 var(--sp-3); font-size:15px; }
-/* Availability / target role line in the About tile */
-.tile--wide .avail{
-  display:flex; align-items:center; gap:10px; margin:0 0 var(--sp-3);
-  font-size:12.5px; color:var(--fg);
-  padding:10px 14px; border:1px solid rgba(53,240,160,.28); border-radius:var(--r-1);
-  background:rgba(53,240,160,.05);
-}
-.avail .dot{ flex:0 0 auto; }
 .tile__tags{ display:flex; flex-wrap:wrap; gap:7px; }
 .tile__tags span{ font-size:10.5px; color:var(--muted); border:1px solid var(--border); border-radius:999px; padding:4px 10px; }
 .tile--stat{ display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:4px; min-height:150px; }

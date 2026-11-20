@@ -77,32 +77,38 @@ const SHOTS = {
 };
 
 const SKILLS = [
-  { name:'Java & Spring Boot', lvl:95, meta:'20+ anni'   },
-  { name:'AWS Cloud',          lvl:85, meta:'EC2 · Lambda · SQS' },
-  { name:'Microservices',      lvl:90, meta:'DDD · Hexagonal' },
-  { name:'Database Design',    lvl:88, meta:'SQL · NoSQL'  },
-  { name:'System Architecture',lvl:92, meta:'Clean Arch'   },
+  { name:'Java & Spring Boot', lvl:95, meta:'20+ anni', metaEn:'20+ years' },
+  { name:'System Architecture',   lvl:92, meta:'Clean Arch · DDD' },
+  { name:'Microservices',         lvl:90, meta:'Hexagonal · REST' },
+  { name:'Data Engineering',      lvl:88, meta:'Postgres · Flyway · data mart' },
+  { name:'AWS Cloud',             lvl:85, meta:'ECS · Lambda · EventBridge' },
+  { name:'AI · LLM & RAG',     lvl:82, meta:'Azure OpenAI · pgvector · MCP' },
+  { name:'Database Design',       lvl:88, meta:'SQL · NoSQL' },
   { name:'DevOps & CI/CD',     lvl:80, meta:'Linux · Docker' }
 ];
 
 const JOBS = [
   { when:'2022 — oggi', whenEn:'2022 — now', role:'Software Engineer', co:'Besafe', loc:'Roma, IT',
-    it:['Backend Java su architettura modulare orientata ai servizi REST e al Domain Driven Design',
-        'Servizi full stack custom per la gestione di programmi di affiliazione ed e-commerce',
-        'Sistemi adattivi e intelligenti con RAG su database vettoriali (PGVector) e modelli di reasoning (LLM)',
-        'Refactoring di componenti batch legacy verso Clean Architecture e architettura esagonale (Ports &amp; Adapters)',
-        'Integrazione di sistemi di pagamento e di interscambio tra gestionali, gestione crediti e riconciliazione automatica',
-        'Orchestrazione di servizi su AWS: EC2, SQS, Lambda, CloudWatch, Scheduler',
-        'Sviluppo Spring Batch e Quarkus, rifattorizzati per prestazioni, manutenibilità e monitorabilità',
-        'Unit test sui flussi critici e supporto al team Operations su task, integrazioni e onboarding'],
-    en:['Java backend on a modular architecture oriented to REST services and Domain Driven Design',
-        'Custom full-stack services for affiliate programs and e-commerce',
-        'Adaptive, intelligent systems using RAG over vector databases (PGVector) and reasoning models (LLM)',
-        'Legacy batch components refactored towards Clean Architecture and a hexagonal (Ports &amp; Adapters) design',
-        'Payment and back-office interchange integrations, credit handling and automatic reconciliation',
-        'Service orchestration on AWS: EC2, SQS, Lambda, CloudWatch, Scheduler',
-        'Spring Batch and Quarkus development, refactored for performance, maintainability and observability',
-        'Unit tests on critical flows and support to the Operations team on tasks, integrations and onboarding'] },
+    it:['Ownership tecnica di un motore di pre-valutazione dei sinistri basato su LLM (Azure OpenAI) e RAG: dai documenti allegati individua quelli mancanti e verifica quali requisiti di polizza sono soddisfatti o violati. Dal design doc all’alpha in testing',
+        'Progettazione della supervisione dei giudizi del modello: misurare e correggere l’accuratezza di un LLM, non solo costruirne il retrieval',
+        'Server MCP (Model Context Protocol) in Spring Boot che apre il data mart aziendale agli assistenti AI in sola lettura, con trasporto Streamable HTTP e autorizzazione OAuth 2 a scope dedicati',
+        'Data mart su PostgreSQL con pipeline a tre livelli (eventi → ultimo stato noto → viste aggregate), alimentato da sorgenti eterogenee: MySQL, Postgres, Freshdesk, Pipedrive e API di booking',
+        'Viste materializzate versionate con migrazioni Flyway ripetibili, refresh concorrente in ordine di dipendenza e job coordinati con advisory lock',
+        'Architettura per la ricerca semantica su PostgreSQL: pgvector e full-text nello stesso database per query ibride, con l’indice vettoriale come dato derivato e sempre ricostruibile',
+        'Orchestrazione su AWS: EventBridge → ECS RunTask, trigger HTTP da API Gateway, Lambda, SQS e alerting su CloudWatch; compressione di ~19 milioni di righe storiche',
+        'Backend Java (Spring Boot, Quarkus, Spring Batch) su architettura modulare REST e DDD; refactoring dei batch legacy verso Clean Architecture ed esagonale (Ports &amp; Adapters)',
+        'Servizi full stack per affiliazioni ed e-commerce, integrazioni di pagamento, gestione crediti e riconciliazione automatica',
+        'Design doc con review iterative, sviluppo accelerato dall’AI (Claude Code), unit test sui flussi critici e supporto al team Operations'],
+    en:['Technical ownership of an LLM (Azure OpenAI) and RAG engine that pre-assesses insurance claims: from the attached documents it flags what is missing and checks which policy requirements are met or violated. From design doc to alpha in testing',
+        'Designed the supervision of the model’s judgements: measuring and correcting how well an LLM decides, not just building its retrieval',
+        'MCP (Model Context Protocol) server in Spring Boot giving AI assistants read-only access to the company data mart, over Streamable HTTP with OAuth 2 and dedicated scopes',
+        'PostgreSQL data mart with a three-layer pipeline (events → latest known state → aggregated views), fed by heterogeneous sources: MySQL, Postgres, Freshdesk, Pipedrive and booking APIs',
+        'Versioned materialized views via Flyway repeatable migrations, concurrent refresh in dependency order and jobs coordinated with advisory locks',
+        'Semantic search architecture on PostgreSQL: pgvector and full-text in the same database for hybrid queries, with the vector index as derived, always rebuildable data',
+        'AWS orchestration: EventBridge → ECS RunTask, HTTP triggers from API Gateway, Lambda, SQS and CloudWatch alerting; compression of ~19 million historical rows',
+        'Java backend (Spring Boot, Quarkus, Spring Batch) on a modular REST and DDD architecture; legacy batch jobs refactored towards Clean Architecture and hexagonal design (Ports &amp; Adapters)',
+        'Full-stack services for affiliate programs and e-commerce, payment integrations, credit handling and automatic reconciliation',
+        'Design docs with iterative reviews, AI-accelerated development (Claude Code), unit tests on critical flows and support to the Operations team'] },
 
   { when:'2021', whenEn:'2021', role:'Java Developer', co:'Atex', loc:'Da remoto', locEn:'Remote',
     it:['Gestionali per il settore editoriale su JBOSS, in Java e Angular'],
@@ -164,8 +170,7 @@ const JOBS = [
 ];
 
 const MARQUEE = [
-  'Java','Spring Boot','AWS','Lambda','SQS','PostgreSQL','MongoDB','Docker','Kubernetes',
-  'Clean Architecture','DDD','Hexagonal','Spring Batch','REST',
-  'Linux','CI/CD','Microservices','Event-Driven',
-  'Advanced AI Development','RAG solutions','Architectures'
+  'Java','Spring Boot','AWS','LLM','RAG','MCP','PostgreSQL','pgvector','Azure OpenAI',
+  'Clean Architecture','DDD','Hexagonal','Data Mart','Flyway','EventBridge','ECS','Lambda','SQS',
+  'Spring Batch','Quarkus','REST','Event-Driven','Docker','Kubernetes','Linux','CI/CD','Claude Code'
 ];

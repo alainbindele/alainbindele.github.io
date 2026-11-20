@@ -63,8 +63,8 @@ const SITE = 'https://alainbindele.github.io';
 const SWAPS = [
   ['<html lang="it" data-lang="it">', '<html lang="en" data-lang="en" data-root="../">'],
 
-  ['<meta name="description" content="Alain Bindele — Software Engineer. 20+ anni tra Java, Spring Boot, AWS e clean architecture. Sistemi distribuiti, design pattern e codice che invecchia bene." />',
-   '<meta name="description" content="Alain Bindele — Software Engineer based in Rome. 20+ years with Java, Spring Boot, AWS and clean architecture. Distributed systems, design patterns and code that ages well." />'],
+  ['<meta name="description" content="Alain Bindele — Software Engineer a Roma. 20+ anni tra Java, Spring Boot, AWS e clean architecture; oggi anche LLM, RAG, MCP e data engineering su PostgreSQL." />',
+   '<meta name="description" content="Alain Bindele — Software Engineer based in Rome. 20+ years with Java, Spring Boot, AWS and clean architecture; now also LLMs, RAG, MCP and data engineering on PostgreSQL." />'],
 
   [`<link rel="canonical" href="${SITE}/" />`, `<link rel="canonical" href="${SITE}/en/" />`],
   [`<meta property="og:url" content="${SITE}/" />`, `<meta property="og:url" content="${SITE}/en/" />`],

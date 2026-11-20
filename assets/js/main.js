@@ -35,15 +35,16 @@ window.scrollTo(0, 0);
 
 /* ═══════════════ 1. BOOT SEQUENCE ═══════════════ */
 const BOOT_LINES = [
-  ['probing cpu',            'ok'],
-  ['jvm 21 · g1gc',          'ok'],
-  ['spring context',         'ok'],
-  ['aws credentials',        'ok'],
-  ['mounting /dev/coffee',   'ok'],
-  ['webgl · point cloud',    'ok'],
-  ['hexagonal ports',        'ok'],
-  ['20 years of commits',    'ok'],
-  ['ready',                  'ok']
+  ['probing cpu',              'ok'],
+  ['jvm 21 · g1gc',            'ok'],
+  ['spring context',           'ok'],
+  ['aws credentials',          'ok'],
+  ['postgres · pgvector',      'ok'],
+  ['mcp server · oauth2',      'ok'],
+  ['llm · rag pipeline',       'ok'],
+  ['mounting /dev/coffee',     'ok'],
+  ['20 years of commits',      'ok'],
+  ['ready',                    'ok']
 ];
 
 // The overlay is shown only on the first visit of the session (decided by the inline
@@ -331,7 +332,7 @@ function gauges() {
       </svg>
       <span class="gauge__num mono" data-to="${s.lvl}">0</span>
       <p class="gauge__name">${s.name}</p>
-      <span class="gauge__meta">${s.meta}</span>
+      <span class="gauge__meta">${LANG === 'en' && s.metaEn ? s.metaEn : s.meta}</span>
     </article>`).join('');
 
   const C = 2 * Math.PI * 52;
@@ -480,7 +481,7 @@ const CMDS = {
 
   whoami: () => `<span class="ok">alain</span>
 Software Engineer · Roma, IT
-20+ anni · Java · Spring Boot · AWS · Clean Architecture
+20+ anni · Java · Spring Boot · AWS · LLM &amp; RAG · Clean Architecture
 <span class="dm">"la chiarezza progettuale vale quanto il codice che la implementa"</span>`,
 
   ls: () => Object.keys(FS).map(f => `<span class="ac">${f}</span>`).join('   '),
@@ -508,6 +509,8 @@ cv        <a href="${ROOT}downloads/CV_${LANG}.pdf" download>CV_${LANG}.pdf</a>`
 <span class="ac">   /_/   \\_\\____/</span>    Shell   <span class="hl">zsh</span>
                      Lang    <span class="hl">Java · TS · SQL</span>
                      Cloud   <span class="hl">AWS</span>
+                     AI      <span class="hl">LLM · RAG · MCP</span>
+                     Data    <span class="hl">Postgres · pgvector</span>
                      Coffee  <span class="hl">∞</span>`,
 
   date: () => new Date().toLocaleString(LANG === 'en' ? 'en-GB' : 'it-IT', { timeZone: 'Europe/Rome' }),
@@ -662,27 +665,32 @@ function jumpToHash() {
   const id = location.hash && location.hash.slice(1);
   const target = id && document.getElementById(id);
   if (!target) return;
+  let moved = false;
   const go = () => {
+    if (moved) return;
     if (lenis) {
       lenis.resize();                              // its cached page height may be stale and clamp the jump
       lenis.scrollTo(target, { offset: -60, immediate: true, force: true });
     }
     else target.scrollIntoView();
   };
+
+  // Every ScrollTrigger refresh (ours, and its automatic one on `load`) scrolls to 0 to
+  // measure; Lenis would then glide back to the top. Re-apply the anchor after each
+  // refresh until the page has settled or the reader starts scrolling.
+  const release = () => ScrollTrigger.removeEventListener('refresh', go);
+  const stop = () => { moved = true; release(); };
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(e => addEventListener(e, stop, { once: true, passive: true }));
+  ScrollTrigger.addEventListener('refresh', go);
   go();
 
-  // Web fonts and images can still change section heights after the first jump:
-  // re-align once they have settled, unless the reader has already started scrolling.
-  let moved = false;
-  const stop = () => { moved = true; };
-  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(e => addEventListener(e, stop, { once: true, passive: true }));
+  // Web fonts and images can still change section heights: re-align once they have loaded.
   const loaded = document.readyState === 'complete'
     ? Promise.resolve()
     : new Promise(r => addEventListener('load', r, { once: true }));
   Promise.all([document.fonts ? document.fonts.ready : null, loaded]).then(() => {
-    if (moved) return;
-    ScrollTrigger.refresh();
-    go();
+    ScrollTrigger.refresh();                       // triggers go() through the listener
+    setTimeout(release, 1500);
   });
 }
 

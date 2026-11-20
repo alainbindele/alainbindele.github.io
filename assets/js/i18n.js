@@ -13,18 +13,16 @@ const I18N = {
     'nav.path':'percorso','nav.contact':'contatti',
 
     'hero.loc':'Roma, Italia',
-    'hero.lead':'Vent’anni a costruire backend che reggono il peso del tempo. Java, Spring Boot, AWS, sistemi distribuiti e l’ossessione per il codice che si lascia leggere.',
+    'hero.lead':'Vent’anni a costruire backend che reggono il peso del tempo. Java, Spring Boot, AWS, data pipeline e sistemi AI con LLM e RAG, con l’ossessione per il codice che si lascia leggere.',
     'hero.cta1':'Vedi i progetti','hero.cta2':'Parliamone',
     'hero.chip1':'anni di esperienza','hero.chip2':'Laurea Magistrale','hero.chip3':'progetti in produzione',
     'hero.scroll':'scroll',
 
     'about.title':'Chi sono','about.sub':'// profilo professionale',
-    'about.bio':'Software Engineer con oltre 20 anni di sviluppo alle spalle, tra corporate e startup. Lavoro su backend Java e Spring Boot, API REST, AWS, database relazionali e NoSQL. Mi interessano clean architecture, design pattern e tutto ciò che rende un sistema manutenibile anche fra cinque anni. Ho fatto formazione tecnica e mentoring, e credo che la chiarezza progettuale valga quanto il codice che la implementa.',
+    'about.bio':'Software Engineer con oltre 20 anni di sviluppo alle spalle, tra corporate e startup. Lavoro su backend Java e Spring Boot, API REST, AWS, database relazionali e NoSQL. Oggi porto gli LLM dentro sistemi reali: RAG per valutare documenti, server MCP che aprono i dati aziendali agli assistenti AI, data mart su PostgreSQL. Mi interessano clean architecture, design pattern e tutto ciò che rende un sistema manutenibile anche fra cinque anni. Ho fatto formazione tecnica e mentoring, e credo che la chiarezza progettuale valga quanto il codice che la implementa.',
     'about.k1':'anni di codice','about.k2':'ruoli dal 2005',
     'about.l1':'madrelingua','about.l2':'ottima tecnica','about.l3':'base',
     'about.edu':'Laurea Magistrale in Informatica',
-    // TODO(alain): role you are looking for, work mode, availability
-    'about.avail':'Disponibile per: [RUOLO CERCATO] · [remoto / ibrido su Roma] · [da quando]',
 
     'stack.title':'Stack','stack.sub':'// tecnologie di ogni giorno',
 
@@ -56,18 +54,16 @@ const I18N = {
     'nav.path':'path','nav.contact':'contact',
 
     'hero.loc':'Rome, Italy',
-    'hero.lead':'Twenty years building backends that hold up over time. Java, Spring Boot, AWS, distributed systems, and a stubborn preference for code that reads well.',
+    'hero.lead':'Twenty years building backends that hold up over time. Java, Spring Boot, AWS, data pipelines and AI systems with LLMs and RAG, and a stubborn preference for code that reads well.',
     'hero.cta1':'See the work','hero.cta2':'Get in touch',
     'hero.chip1':'years of experience','hero.chip2':'MSc Computer Science','hero.chip3':'projects in production',
     'hero.scroll':'scroll',
 
     'about.title':'About','about.sub':'// professional profile',
-    'about.bio':'Software Engineer with over 20 years of development behind me, across corporate and startup settings. I work on Java and Spring Boot backends, REST APIs, AWS, relational and NoSQL databases. I care about clean architecture, design patterns, and everything that keeps a system maintainable five years from now. I have done technical training and mentoring, and I believe design clarity counts as much as the code implementing it.',
+    'about.bio':'Software Engineer with over 20 years of development behind me, across corporate and startup settings. I work on Java and Spring Boot backends, REST APIs, AWS, relational and NoSQL databases. These days I bring LLMs into real systems: RAG to assess documents, MCP servers that open company data to AI assistants, PostgreSQL data marts. I care about clean architecture, design patterns, and everything that keeps a system maintainable five years from now. I have done technical training and mentoring, and I believe design clarity counts as much as the code implementing it.',
     'about.k1':'years of code','about.k2':'roles since 2005',
     'about.l1':'native','about.l2':'strong technical','about.l3':'basic',
     'about.edu':'MSc in Computer Science',
-    // TODO(alain): role you are looking for, work mode, availability
-    'about.avail':'Available for: [TARGET ROLE] · [remote / hybrid in Rome] · [from when]',
 
     'stack.title':'Stack','stack.sub':'// everyday technologies',
 
