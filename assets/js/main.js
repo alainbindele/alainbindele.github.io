@@ -43,7 +43,6 @@ const BOOT_LINES = [
   ['webgl · point cloud',    'ok'],
   ['hexagonal ports',        'ok'],
   ['20 years of commits',    'ok'],
-  ['self-certification T₀⊊T₁⊊T₂', 'ok'],
   ['ready',                  'ok']
 ];
 
@@ -417,14 +416,6 @@ function workScroll() {
   });
 }
 
-/* ═══════════════ 11. PAPER ═══════════════ */
-function paper() {
-  ScrollTrigger.create({
-    trigger: '.paper__formula', start: 'top 82%', once: true,
-    onEnter: () => $('.paper__formula').classList.add('is-in')
-  });
-}
-
 /* ═══════════════ 12. TIMELINE ═══════════════ */
 function renderPath() {
   const tl = $('#timeline');
@@ -471,7 +462,6 @@ const FS = {
   'about.md':  () => t('about.bio'),
   'stack.txt': () => SKILLS.map(s => `${s.name.padEnd(22)} ${'█'.repeat(Math.round(s.lvl / 7))} ${s.lvl}`).join('\n'),
   'cv.pdf':    () => `<span class="dm">binary file — </span><a href="${ROOT}downloads/CV_${LANG}.pdf" download>scarica / download</a>`,
-  'paper.tex': () => 'T₀ ⊊ T₁ ⊊ T₂\n\n' + t('paper.abs')
 };
 
 const CMDS = {
@@ -672,8 +662,28 @@ function jumpToHash() {
   const id = location.hash && location.hash.slice(1);
   const target = id && document.getElementById(id);
   if (!target) return;
-  if (lenis) lenis.scrollTo(target, { offset: -60, immediate: true });
-  else target.scrollIntoView();
+  const go = () => {
+    if (lenis) {
+      lenis.resize();                              // its cached page height may be stale and clamp the jump
+      lenis.scrollTo(target, { offset: -60, immediate: true, force: true });
+    }
+    else target.scrollIntoView();
+  };
+  go();
+
+  // Web fonts and images can still change section heights after the first jump:
+  // re-align once they have settled, unless the reader has already started scrolling.
+  let moved = false;
+  const stop = () => { moved = true; };
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(e => addEventListener(e, stop, { once: true, passive: true }));
+  const loaded = document.readyState === 'complete'
+    ? Promise.resolve()
+    : new Promise(r => addEventListener('load', r, { once: true }));
+  Promise.all([document.fonts ? document.fonts.ready : null, loaded]).then(() => {
+    if (moved) return;
+    ScrollTrigger.refresh();
+    go();
+  });
 }
 
 /* ═══════════════ BOOTSTRAP ═══════════════ */
@@ -692,7 +702,6 @@ function start(intro) {
   tilt();
   gauges();
   workScroll();
-  paper();
   pathScroll();
   term();
   konami();
@@ -701,7 +710,7 @@ function start(intro) {
 
   // generic scroll reveals (below the fold, never hide above-the-fold content)
   if (!REDUCED) {
-    $$('.tile, .gauge, .ccard, .paper').forEach(el => {
+    $$('.tile, .gauge, .ccard').forEach(el => {
       gsap.from(el, {
         y: 34, opacity: 0, duration: .75, ease: 'power3.out',
         scrollTrigger: { trigger: el, start: 'top 90%', once: true }

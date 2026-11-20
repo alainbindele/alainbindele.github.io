@@ -10,7 +10,7 @@
 const I18N = {
   it:{
     'nav.about':'chi sono','nav.stack':'stack','nav.work':'progetti',
-    'nav.paper':'ricerca','nav.path':'percorso','nav.contact':'contatti',
+    'nav.path':'percorso','nav.contact':'contatti',
 
     'hero.loc':'Roma, Italia',
     'hero.lead':'Vent’anni a costruire backend che reggono il peso del tempo. Java, Spring Boot, AWS, sistemi distribuiti e l’ossessione per il codice che si lascia leggere.',
@@ -32,10 +32,6 @@ const I18N = {
     'work.hint':'↔ scorri','work.go':'visita',
     'work.newTab':'(si apre in una nuova scheda)','work.shot':'Screenshot di',
 
-    'paper.title':'Ricerca','paper.sub':'// contributi indipendenti',
-    'paper.h':'La Gerarchia Minima dell’Auto-Certificazione',
-    'paper.abs':'Dimostro che l’auto-certificazione in aritmetica richiede esattamente due livelli di riflessione — né più, né meno. Qualsiasi teoria ricorsivamente assiomatizzabile che definisce la verità per una teoria base T₀ e dimostra la propria correttezza si frammenta necessariamente in una gerarchia minima. La verità può essere definita al livello uno, o certificata al livello due, ma mai entrambe nella stessa teoria.',
-    'paper.cta':'Leggi la pubblicazione',
 
     'path.title':'Percorso','path.sub':'// git log --reverse --author="alain"',
 
@@ -52,13 +48,12 @@ const I18N = {
     // attribute-only strings (aria-label / alt)
     'aria.sections':'Sezioni','aria.menu':'Menu',
     'aria.scroll':'Scorri alla sezione Chi sono',
-    'aria.formula':'T zero strettamente incluso in T uno strettamente incluso in T due',
     'alt.portrait':'Ritratto di Alain Bindele, software engineer a Roma'
   },
 
   en:{
     'nav.about':'about','nav.stack':'stack','nav.work':'work',
-    'nav.paper':'research','nav.path':'path','nav.contact':'contact',
+    'nav.path':'path','nav.contact':'contact',
 
     'hero.loc':'Rome, Italy',
     'hero.lead':'Twenty years building backends that hold up over time. Java, Spring Boot, AWS, distributed systems, and a stubborn preference for code that reads well.',
@@ -80,10 +75,6 @@ const I18N = {
     'work.hint':'↔ scroll','work.go':'visit',
     'work.newTab':'(opens in a new tab)','work.shot':'Screenshot of',
 
-    'paper.title':'Research','paper.sub':'// independent contributions',
-    'paper.h':'The Minimal Hierarchy of Self-Certification',
-    'paper.abs':'I show that self-certification in arithmetic requires exactly two levels of reflection — no more, no less. Any recursively axiomatisable theory that defines truth for a base theory T₀ and proves its own soundness necessarily splits into a minimal hierarchy. Truth can be defined at level one, or certified at level two, but never both within the same theory.',
-    'paper.cta':'Read the paper',
 
     'path.title':'Path','path.sub':'// git log --reverse --author="alain"',
 
@@ -99,7 +90,6 @@ const I18N = {
 
     'aria.sections':'Sections','aria.menu':'Menu',
     'aria.scroll':'Scroll to the About section',
-    'aria.formula':'T zero strictly contained in T one strictly contained in T two',
     'alt.portrait':'Portrait of Alain Bindele, software engineer based in Rome'
   }
 };
