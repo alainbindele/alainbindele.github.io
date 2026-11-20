@@ -3,31 +3,33 @@
    Inline (non fetch) così la pagina gira anche da file://
    ═══════════════════════════════════════════════════════════ */
 
+/* offline:true hides the "visit" link (site not reachable right now) but keeps the card.
+   Remove the flag when the site is back up. Last checked: 2026-11-20. */
 const PROJECTS = [
   { id:'fire-calculator',    title:'FIRE Calculator',    cat:'projects',
     it:'Calcola quando raggiungi la libertà finanziaria inserendo risparmi, investimenti e spese.',
     en:'Work out when you hit financial independence from savings, investments and expenses.',
-    url:'https://www.firecalculator.info', tech:['TypeScript','D3.js'] },
+    url:'https://www.firecalculator.info', offline:true, tech:['TypeScript','D3.js'] },
 
   { id:'portfolio-balancer', title:'PortfolioBalancer',  cat:'projects',
     it:'Strumento gratuito e privato per tenere il portafoglio di investimenti in equilibrio.',
     en:'Free, private tool that keeps an investment portfolio balanced.',
-    url:'https://www.portfoliobalancer.info', tech:['TypeScript'] },
+    url:'https://www.portfoliobalancer.info', offline:true, tech:['TypeScript'] },
 
   { id:'devt00ls',           title:'Devt00ls',           cat:'projects',
     it:'Raccolta di strumenti per sviluppatori: converter, generatori, tester.',
     en:'A collection of developer tools: converters, generators, testers.',
-    url:'https://devt00ls.com/', tech:['AI'] },
+    url:'https://devt00ls.com/', offline:true, tech:['AI'] },
 
   { id:'piante-grasse',      title:'Piante Grasse',      cat:'projects',
     it:'Archivio intelligente di succulente, con IA per coltivazione e diagnosi.',
     en:'Smart succulent archive with AI for cultivation and diagnosis.',
-    url:'https://www.piante-grasse.com', tech:['AI'] },
+    url:'https://www.piante-grasse.com', offline:true, tech:['AI'] },
 
   { id:'notificamy',         title:'Notificamy',         cat:'projects',
     it:'Assistente che trasforma promemoria in azioni su email, Slack e WhatsApp.',
     en:'Assistant that turns reminders into actions on email, Slack and WhatsApp.',
-    url:'https://www.notificamy.com', tech:['Spring Boot','Lambda','TypeScript'] },
+    url:'https://www.notificamy.com', offline:true, tech:['Spring Boot','Lambda','TypeScript'] },
 
   { id:'atlas',              title:'Atlas',              cat:'projects',
     it:'Sync daemon self-hosted per Windows, sincronizzazione cifrata verso VPS.',
@@ -136,13 +138,13 @@ const JOBS = [
 
   { when:'2016 — 2017', whenEn:'2016 — 2017', role:'Consulente Software', roleEn:'Software Consultant',
     co:'Varie aziende', coEn:'Various companies', loc:'Roma, IT',
-    it:['Consulman Spa: ingegnere informatico e sysadmin Linux (Fedora, Debian, RedHat) e Windows Server, responsabile sicurezza e sviluppatore PHP',
+    it:['Consulman Spa: ingegnere informatico e sysadmin Linux (Fedora, Debian, RedHat) e Windows Server, sviluppatore PHP',
         'Matchin Srl: consulente, sviluppatore web e sistemista per il backend',
         'B-Wave Srl: sviluppatore web Ruby on Rails',
         'D2P Solutions: docente di linguaggi di programmazione in corsi aziendali (Node.js, Linux)',
         'Gameotic: startup, seed round — responsabile sicurezza informatica, sysadmin Linux CentOS e sviluppatore (PHP, jQuery, Node.js, Bash); streaming video a bassa latenza (~0,2 s) con ffmpeg e Red5 verso macchine telecomandate reali',
         'Docenze in campo informatico per associazioni e privati'],
-    en:['Consulman Spa: software engineer and sysadmin on Linux (Fedora, Debian, RedHat) and Windows Server, security lead and PHP developer',
+    en:['Consulman Spa: software engineer and sysadmin on Linux (Fedora, Debian, RedHat) and Windows Server, PHP developer',
         'Matchin Srl: consultant, web developer and backend sysadmin',
         'B-Wave Srl: Ruby on Rails web developer',
         'D2P Solutions: programming languages instructor for corporate training (Node.js, Linux)',

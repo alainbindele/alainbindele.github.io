@@ -414,10 +414,10 @@ function renderWork() {
       <h3 class="card__title">${p.title}</h3>
       <p class="card__desc">${LANG === 'en' ? p.en : p.it}</p>
       <div class="card__tech">${p.tech.map(x => `<span>${x}</span>`).join('')}</div>
-      <a class="card__go" href="${ext(p) ? p.url : ROOT + p.url}" ${ext(p) ? 'target="_blank" rel="noopener"' : ''}>
+      ${p.offline ? '' : `<a class="card__go" href="${ext(p) ? p.url : ROOT + p.url}" ${ext(p) ? 'target="_blank" rel="noopener"' : ''}>
         ${t('work.go')}<span class="sr-only"> ${p.title}${ext(p) ? ' ' + t('work.newTab') : ''}</span>
         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg>
-      </a>
+      </a>`}
     </article>`).join('');
 }
 
