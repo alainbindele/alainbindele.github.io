@@ -96,7 +96,7 @@ const SKILLS = [
 
 const JOBS = [
   { when:'2022 — oggi', whenEn:'2022 — now', role:'Software Engineer', co:'Besafe', loc:'Roma, IT',
-    it:['Ownership tecnica di un motore di pre-valutazione dei sinistri basato su LLM (Azure OpenAI) e RAG: dai documenti allegati individua quelli mancanti e verifica quali requisiti di polizza sono soddisfatti o violati. Dal design doc all’alpha in testing',
+    it:['Architettura e sviluppo di un motore di pre-valutazione dei sinistri basato su LLM (Azure OpenAI) e RAG: dai documenti allegati individua quelli mancanti e verifica quali requisiti di polizza sono soddisfatti o violati. Dal design doc all’alpha in testing',
         'Progettazione della supervisione dei giudizi del modello: misurare e correggere l’accuratezza di un LLM, non solo costruirne il retrieval',
         'Server MCP (Model Context Protocol) in Spring Boot che apre il data mart aziendale agli assistenti AI in sola lettura, con trasporto Streamable HTTP e autorizzazione OAuth 2 a scope dedicati',
         'Data mart su PostgreSQL con pipeline a tre livelli (eventi → ultimo stato noto → viste aggregate), alimentato da sorgenti eterogenee: MySQL, Postgres, Freshdesk, Pipedrive e API di booking',
@@ -106,7 +106,7 @@ const JOBS = [
         'Backend Java (Spring Boot, Quarkus, Spring Batch) su architettura modulare REST e DDD; refactoring dei batch legacy verso Clean Architecture ed esagonale (Ports &amp; Adapters)',
         'Servizi full stack per affiliazioni ed e-commerce, integrazioni di pagamento, gestione crediti e riconciliazione automatica',
         'Design doc con review iterative, sviluppo accelerato dall’AI (Claude Code), unit test sui flussi critici e supporto al team Operations'],
-    en:['Technical ownership of an LLM (Azure OpenAI) and RAG engine that pre-assesses insurance claims: from the attached documents it flags what is missing and checks which policy requirements are met or violated. From design doc to alpha in testing',
+    en:['Architected and built an LLM (Azure OpenAI) and RAG engine that pre-assesses insurance claims: from the attached documents it flags what is missing and checks which policy requirements are met or violated. From design doc to alpha in testing',
         'Designed the supervision of the model’s judgements: measuring and correcting how well an LLM decides, not just building its retrieval',
         'MCP (Model Context Protocol) server in Spring Boot giving AI assistants read-only access to the company data mart, over Streamable HTTP with OAuth 2 and dedicated scopes',
         'PostgreSQL data mart with a three-layer pipeline (events → latest known state → aggregated views), fed by heterogeneous sources: MySQL, Postgres, Freshdesk, Pipedrive and booking APIs',
